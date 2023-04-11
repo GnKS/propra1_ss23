@@ -22,3 +22,25 @@ Das Basis-Interface ist Collection. Dort sind Methoden definiert, die für alle 
 Konkrete Klassen implementieren üblicherweise eines der drei spezifischeren Interfaces `List`, `Set` und `Queue`.
 
 ### List
+Das List-Interface ist für Kollektionen gedacht, bei denen Elemente geordnet positioniert sind.
+Elemente sind nicht sortiert, sondern haben haben eine bestimmte Position in der Kollektion und können mehrfach vorkommen.
+
+Wesentliche Methoden die `List` zusätzlich zu `Collection` spezifiziert, sind
+- `get`, um ein Element, das an einer bestimmten Position in der Liste gespeichert ist, zu lesen
+- `set`, um ein Element, das an einer bestimmten Position in der Liste gespeichert ist, zu überschreiben
+
+`List` stellt außerdem eine zusätzliche Variante von `add` bereit:
+```java
+List<Integer> ints = init(); //Liste mit Werten erzeugen
+ints.add(1, 6); //fügt an Position 1 den Wert 6 ein
+```
+Mit `of` lässt sich eine Liste direkt erzeugen die sich im Nachhinein nicht mehr ändern lässt.
+Eine solche Methode, die kein Konstruktor ist, nennt man statische Factorymethode.
+
+```java
+List<Integer> numbers = List.of(2,3,4,5,6,7,8,9,16);
+System.out.println(numbers); // => [2,3,4,5,6,7,8,9,16]
+numbers.add(23); // => Exception java.lang.UnsupportedOperationException
+```
+
+#### ArrayList
