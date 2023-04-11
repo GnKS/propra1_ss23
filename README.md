@@ -1,2 +1,4 @@
-# propra1_ss23
-Propra1 Zusammenfassung
+# ProPra I Zusammenfassung
+
+# Woche 1
+
