@@ -345,3 +345,114 @@ public class BetterMap {
   }
 }
 ```
+
+## Idiomatische Verwendung von Schleifen
+
+Wenn im Code die „passenden“ Sprachkonstrukte zum Erreichen eines Ziels verwendet werden, bezeichnet man den Code als „idiomatisch“.
+
+### Rekursion
+
+Es ist in Java extrem selten eine gute Idee, eine Rekursion zu verwenden. Es lassen sich damit zwar bestimmte Algorithmen 
+sehr elegant ausdrücken, aber für jeden rekursiven Aufruf wird in Java auf dem Aufrufstack etwas Speicher benötigt. Wenn der Speicher, den die JVM für den 
+Aufrufstack reserviert hat, voll ist, kommt es zu einem StackOverflowError.
+
+### Enhanced For Loop
+
+Diese Schleife wird immer dann verwendet, wenn man über eine Sammlung von Werten iteriert.
+Beispiel:
+
+```java
+List<Person> studierende = getStudierende();
+for(Person p : studierende) {
+    System.out.println(p.getAlter());
+}
+```
+
+Die ForEach Schleife hat weniger bewegliche Teile und ist deswegen weniger Fehleranfällig als normale For Schleifen (z.B. beim Index).
+Die foreach-Schleife funktioniert sowohl mit Arrays, als auch mit allen Klassen, die das `Iterable`-Interface implementieren; dies sind insbesondere alle Klassen, die `Collection` implementieren.
+
+### Die ForEach Methode
+
+#### Lambdas
+
+Syntax: (a,b,c) -> { Java Code }
+- Keine lokalen variablen als paramternamen
+- Ein Parameter: Runde Klammern nicht notwendig
+- Nur ein Ausdruck: Geschweifte Klammern und Return sind optional
+
+Beispiel:
+```java
+(Integer n) -> {return n * n;};
+(n) -> {return n * n;};
+n -> {return n * n;};
+n -> n * n;
+
+(offset, n) -> {
+  int[] result = new int[n];
+  for (int i = 0; i < n; i++) {
+    result[i] = i + offset;
+  }
+  return result;
+};
+
+In Variable Speichern welcher Typ?
+
+ausdruck = (offset, n) -> {
+  int[] result = new int[n];
+  for (int i = 0; i < n; i++) {
+    result[i] = i + offset;
+  }
+  return result;
+};
+
+Passendes Funktionales Interface:
+
+public interface MyInterface {
+
+  List<Integer> berechnen(int offset, int n);
+
+}
+
+==> MyInterface ausdruck = (offset, n) -> {
+  int[] result = new int[n];
+  for (int i = 0; i < n; i++) {
+    result[i] = i + offset;
+  }
+  return result;
+};
+
+List<Integer> berechnen = ausdruck.berechnen(-3, 6);
+System.out.println(berechnen);
+```
+Fertige Funktionale Interfaces in java.util.functions:
+- Cunsumer a -> void, BiConsumer (a,b) -> void
+- Function a -> b, BiFunction (a,b) -> c 
+- Supplier () -> a // Erzeugt Werte (immer gleicher oder neuer Wert) z.B. ArrayList
+- Predicate a -> boolean, BiPredicate (a,b) -> boolean
+- UnaryOperator a -> a, BinaryOperator (a,a) -> a
+- Einige spezialisierte Interfaces für int, long und double
+
+Beispiel ForEach:
+```java
+List<String> buchstaben = List.of("a","b","c");
+
+buchstaben.forEach(s -> System.out.println(s));
+```
+
+#### Streams
+
+Streams sind da um Collections zu verarbeiten (z.B. Listen, Arrays, Set)
+
+```java
+public static int compute(List<Integer> ns, int k) {
+  return ns.stream()
+    .filter(x -> x %2 == 0) // nur gerade Werte
+    .filter(x -> x > 5) // nur Werte größer 5
+    .map(x -> x * x) // Zahlen die durch filter kommen werden quadriert
+    .limit(k) // ende Stream nach k elementen
+    .reduce(0, (x,y)->x+y); //0 = akkumulator wert (x = 0) y ist wert aus Stream bis                               //alle werte verarbeitet sind
+}
+```
+
+#### Normaler For Loop
+
