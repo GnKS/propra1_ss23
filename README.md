@@ -439,7 +439,7 @@ List<String> buchstaben = List.of("a","b","c");
 buchstaben.forEach(s -> System.out.println(s));
 ```
 
-#### Streams
+### Streams
 
 Streams sind da um Collections zu verarbeiten (z.B. Listen, Arrays, Set)
 
@@ -454,5 +454,50 @@ public static int compute(List<Integer> ns, int k) {
 }
 ```
 
-#### Normaler For Loop
+### Normaler For Loop
 
+`ForEach`-Methoden und Streams bieten nur sequenziellen Zugriff auf ein Element oder Datenstruktur.
+Wenn mehr als ein Element gleichzeitig oder ein Index benötigit wird eignet sich die normale For Schleife gut.
+
+```java
+List<Person> studierende = getAnmeldeliste();
+for(int i = 0; i < studierende.size(); i++) {
+    System.out.println("Platz " + (i + 1) + ": " + p.getName());
+}
+```
+
+Normale Loops bieten mehr Optionen für Iteration, sind aber fehleranfälliger.
+Die normale for-Schleife kommt auch dann zum Zuge, wenn wir einen Codeblock mehrfach unabhängig von einer Kollektion ausführen wollen.
+
+### While- und Do-While-Loop
+
+Die while- und do-while-Schleifen sind für Fälle gedacht, wo es keine „feste Grenze“ der Anzahl der Iterationen gibt.
+Zum Beispiel so lange von der Standardeingabe einlesen, bis es keine Daten mehr zu lesen gibt.
+
+```java
+Scanner stdin = new Scanner(System.in);
+while(stdin.hasNextLine()) {
+  System.out.println(stdin.nextLine());
+}
+```
+
+## Versionskontrolle mit git
+
+Funktionen die git bietet:
+
+- anzeigen, was ich seit heute Morgen am Code geändert habe
+- anlegen von Zwischenspeicherständen, zwischen denen ich beliebig wechseln kann
+- parallel an verschiedenen Features arbeiten, ohne dass sich unfertige Features mit anderen Sachen in die Quere kommen
+- meine Code und Änderungen daran mit anderen teilen
+- Änderungsvorschläge von anderen einfach in meinem Code übernehmen
+- nachvollziehen, wann und warum ich welche Zeile Code geändert habe
+- schnell feststellen, welche Änderung dafür gesorgt hat, warum jetzt auf einmal Funktion xy nicht mehr funktioniert
+
+Mit Versionskontrollsystemen können Sie relativ einfach verschiedene Versionsstände Ihres Programmcodes festhalten und auch problemlos im Team gleichzeitig an verschiedenen Stellen im Code arbeiten, ohne dass es danach beim Zusammenführen aller Änderungen unübersichtlich wird.
+
+git-Kommandos:
+- `clone` // um Repository zu kopieren
+- `status` // Änderungen zu letztem Zustand anzeigen
+- `add` // Änderungen hinzufügen
+- `commit` // Änderung in staging area mit Message zusammenfassen
+- `push` // Änderungen auf github hochladen
