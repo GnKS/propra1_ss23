@@ -57,7 +57,7 @@ public class MyClass {
 -
 
 #### Erklären Sie, was hier passiert: 
-```java 
+```java
 List<Integer> zahlen = List.of(1, 2, 3);
 
 for(int zahl: zahlen) {
@@ -73,4 +73,46 @@ for(int[] array: komischeMatrix) {
   array[0] = 42;
 }
 
-komischeMatrix.forEach(array -> System.out.println(array[0])); // Ausgabe: 1 3 oder 42 42?```
+komischeMatrix.forEach(array -> System.out.println(array[0])); // Ausgabe: 1 3 oder 42 42?
+```
+-
+
+#### Wir wollen einen Marsrover steuern. Der Rover hat eine KI eingebaut, die den Rover automatisch einen Schritt in einem Suchraster ausführen lässt. Das Interface des Rovers ist
+```java
+public interface Rover {
+  void step();
+  boolean wasserGefunden();
+}
+```
+#### Schreiben Sie ein Methode wasserSuchen, die den Marsrover bewegt, bis er Wasser gefunden hat. Verwenden Sie die passende Schleife.
+-
+
+#### Wir wollen die Rennergebnisse eines Marathons ausgeben. Jede:r Teilnehmer:in ist ein Objekt vom Typ Ergebnis zugeordnet, das Name und die benötigte Zeit speichert. Es gibt einen Typ Zeit, der das Comparable-Interface erweitert.
+```java
+public class Ergebnis {
+  // ...
+  public String getName() { ... }
+  public Zeit getZeit() { ... }
+}
+
+public class Zeit implements Comparable<Zeit> {
+  // ...
+  public int compareTo(Zeit other) { ... }
+}
+
+```
+#### Schreiben Sie eine Methode print, die eine Liste von Ergebnissen bekommt und die Ergebnisse wie in folgendem Beispiel gezeigt auf der Konsole ausgibt:
+```java
+1. Kipchoge, Eliud (02:02:37)
+2. Geremew, Mosinet (02:02:55)
+3. Wasihun, Mule (02:03:16)
+4  Kitata, Tola Shura (02:05:01)
+```
+#### Verwenden Sie die für diesen Zweck idiomatische Schleife.
+-
+
+#### Stellen wir uns vor, wir bekommen die Ergebnisse in einer zufälligen Reihenfolge. Schreiben Sie eine Methode, um die Ergebnisse in die richtige Reihenfolge zu bringen.
+-
+
+#### Ist eine Liste eigentlich eine gute Datenstruktur für Marathon-Resultate oder gibt es etwas Besseres?
+-
