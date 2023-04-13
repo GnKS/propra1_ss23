@@ -28,15 +28,18 @@ public class MyClass {
 }
 ```
 
-#### Im obigen Beispiel zu sortierten Mengen findet sich folgende Zeile ``Set<Integer> ints = new TreeSet<>();`` 
-Muss es auf der linken Seite nicht SortedSet heißen? Warum (nicht)?
-- Lösung text
+#### Im obigen Beispiel zu sortierten Mengen findet sich folgende Zeile ``Set<Integer> ints = new TreeSet<>();`` Muss es auf der linken Seite nicht SortedSet heißen? Warum (nicht)?
+- Nein, muss es nicht da SortedSet Set erweitert und TreeSet SortedSet implementiert.
 
-#### Schauen Sie sich den Comparator aus dem Beispiel ganz genau an und gehen Sie alle möglichen Eingaben durch (zwei unterschiedliche gerade Zahlen, zwei unterschiedliche ungerade Zahlen, eine gerade und eine ungerade Zahl, eine ungerade und eine gerade Zahl, zweimal dieselbe Zahl) und schreiben Sie auf, welches Resultat Sie erhalten.
-- Lösung text
+#### Schauen Sie sich den Comparator aus dem Beispiel ganz genau an und gehen Sie alle möglichen Eingaben durch (zwei unterschiedliche gerade Zahlen, zwei unterschiedliche ungerade Zahlen, eine gerade und eine ungerade Zahl, eine ungerade und eine gerade Zahl, zweimal die selbe Zahl) und schreiben Sie auf, welches Resultat Sie erhalten.
+- Zwei unterschiedliche gerade Zahlen (eingabe 6,4) ausgabe 4,6
+- Zwei unterschiedliche ungerade Zahlen (eingabe 5,3) ausgabe 3,5
+- Eine gerade und eine ungerade Zahl (eingabe 4,7) ausgabe 4,7
+- Eine ungerade und eine gerade Zahl (eingabe 3,4) ausgabe 4,3
+- Zweimal die selbe Zahl (eingabe 2,2) ausgabe 2
 
 #### Angenommen, wir wollen eine statische compareTo-Methode für int schreiben. Ein Vorschlag für die Implementierung ist: ``public static int compareTo(int a, int b) { return a - b; }`` Die Methode liefert einen negativen Wert für a < b, einen positiven Wert für a > b und bei Gleichheit den Wert 0. Warum wäre eine solche Implementierung nicht korrekt? Geben Sie ein Beispiel für a und b an, bei dem die Methode versagt.
--Lösung text
+- Die Methode versagt zum Beispiel in dem Max int bereich a = -2147483648 (32-bit int) und b = 1 die Methode sollte einen negativen Wert liefern da a < b liefert aber einen positiven.
 
 #### Wir benötigen ein Wörterbuch, bei dem die Wörter der Länge nach durchlaufen werden. Verwenden Sie ein TreeSet und eine passende Implementierung von Comparator. In das Set sollen Wörter gespeichert werden und bei einem Durchlauf sollen die längsten Wörter zuerst rauskommen. Bei gleicher Wortlänge ist die Reihenfolge egal.
 - Lösung text
