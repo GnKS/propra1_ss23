@@ -42,7 +42,33 @@ public class MyClass {
 - Die Methode versagt zum Beispiel in dem Max int bereich a = -2147483648 (32-bit int) und b = 1 die Methode sollte einen negativen Wert liefern da a < b liefert aber einen positiven.
 
 #### Wir benötigen ein Wörterbuch, bei dem die Wörter der Länge nach durchlaufen werden. Verwenden Sie ein TreeSet und eine passende Implementierung von Comparator. In das Set sollen Wörter gespeichert werden und bei einem Durchlauf sollen die längsten Wörter zuerst rauskommen. Bei gleicher Wortlänge ist die Reihenfolge egal.
-- Lösung text
+- Lösung:
+```java
+public class MyClass {
+    public static int compareTo(int a, int b) { return a - b; }
+    
+    public static void main(String args[]) {
+        Comparator<String> evenFirstComparator = new Comparator<String>() {
+          @Override
+          public int compare(String o1, String o2) {
+            if (o1.length() == o2.length()) {
+              return 1;
+            }
+            if (o1.length() < o2.length()) {
+              return 1;
+            } else {
+              return -1;
+            }
+          };
+        };
+        
+        SortedSet<String> set = new TreeSet<>(evenFirstComparator);
+        set.addAll(List.of("a","kurzes Wort", "Laaaaaaaaaanges Woooooooooort", "Apfel", "Fuenf"));
+        System.out.println(set); // => [Laaaaaaaaaanges Woooooooooort, kurzes Wort, Apfel, Fuenf, a]
+    }
+    
+}
+```
 
 #### Welchen Fehler haben die beiden Implementierungen von AwkwardMap? Beheben Sie das Problem.
 - Lösung text
