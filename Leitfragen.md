@@ -102,7 +102,7 @@ public class Zeit implements Comparable<Zeit> {
 
 ```
 #### Schreiben Sie eine Methode print, die eine Liste von Ergebnissen bekommt und die Ergebnisse wie in folgendem Beispiel gezeigt auf der Konsole ausgibt:
-```java
+```
 1. Kipchoge, Eliud (02:02:37)
 2. Geremew, Mosinet (02:02:55)
 3. Wasihun, Mule (02:03:16)
