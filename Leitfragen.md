@@ -1,4 +1,4 @@
-# Lösungen zu allen Leitfragen
+# Lösungen zu Leitfragen
 
 ## Woche 1
 
