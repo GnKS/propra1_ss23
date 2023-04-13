@@ -2,7 +2,7 @@
 
 ## Woche 1
 
-### Aufgaben/Leitfragen 1
+### Aufgaben/Leitfragen Die Java-Klassenbibliothek
 
 #### Fassen Sie zusammen, welche konkreten Collection-Klassen für welche Zwecke verwendet werden. Suchen Sie für die Verwendung jeweils ein Beispiel.
 - HashSet: Elemente kommen höchstens ein mal vor. Beispiel: Eine Liste von Elementen die nicht doppelt benötigt werden und wo die Reihenfolge der Elemente egal ist. Bei z.B. einer Such oder Filterfunktion.
@@ -46,3 +46,31 @@ public class MyClass {
 
 #### Welchen Fehler haben die beiden Implementierungen von AwkwardMap? Beheben Sie das Problem.
 - Lösung text
+
+
+### Aufgaben/Leitfragen Idiomatische Verwendung von Schleifen
+
+#### Fassen Sie zusammen, welche Schleife für welchen Zweck benutzt wird.
+-
+
+#### Schreiben Sie eine Methode, die eine Liste von Strings bekommt und diese auf der Konsole ausgibt. Verwenden Sie die richtige Art der Iteration.
+-
+
+#### Erklären Sie, was hier passiert: 
+```java 
+List<Integer> zahlen = List.of(1, 2, 3);
+
+for(int zahl: zahlen) {
+  zahl = 42;
+}
+
+zahlen.forEach(zahl -> System.out.println(zahl)); // Ausgabe: 1 2 3 oder 42 42 42?
+
+
+List<int[]> komischeMatrix = List.of(new int[]{1, 2}, new int[]{3, 4}); // seltsame Konstruktion, nur fürs Beispiel!
+
+for(int[] array: komischeMatrix) {
+  array[0] = 42;
+}
+
+komischeMatrix.forEach(array -> System.out.println(array[0])); // Ausgabe: 1 3 oder 42 42?```
