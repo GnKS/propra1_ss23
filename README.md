@@ -555,3 +555,26 @@ Wie werden Klassen von der JVM gefunden und geladen
   - keinen
  Ohne Sichtbarkeits-Modifier sind die Sachen Package-Private (nur Sichtbar für Klassen im gleichen Package)
  
+## Anwendungen bauen mit Gradle
+
+### Maven und Gradle
+- Management von Abhängigkeiten
+- Typische Build Tätigkeiten (Dateien umkopieren, Verzeichnisse anlegen, ...)
+- Erstellen und verwalten des Klassenpfades
+- Kompilieren, testen und verpacken
+- Deployment
+- Beide sind erweiterbar
+
+Convention over Configuration
+- Minimalier Konfigurationsaufwand bei Einhaltung der Konvention
+  - Der Java Produktivcode liegt in src/main/java
+  - Der Java Testcode liegt in src/test/java
+  - Ressourcen liegen in src/main/resources
+  - Test-Ressourcen in src/test/resources
+- Abweichungen von Konventionen sind per Konfiguration möglich
+
+#### Gradle benutzen
+- ./gradlew tasks
+- ./gradlew check
+- ./gradlew run
+- ./gradlew distZip
