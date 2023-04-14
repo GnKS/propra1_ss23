@@ -142,3 +142,27 @@ public class Zeit implements Comparable<Zeit> {
 
 #### Ist eine Liste eigentlich eine gute Datenstruktur für Marathon-Resultate oder gibt es etwas Besseres?
 -
+
+
+## Woche 2
+
+### Aufgaben/Leitfragen Klassenpfade, Packages und Jars
+
+#### Ändern Sie das Beispiel in classpath/example4 so ab, dass die Klasse Person im Package nested liegt. Kompilieren und starten Sie das Programm dann von der Kommandozeile aus.
+-
+
+#### Angenommen, wir haben eine Java-Datei auf unserem Rechner unter /home/uni/propra1/pfad/Foo.java liegen. Die Klasse verwendet das Default Package. Wie lautet der Klassenpfad, wenn wir die Datei auf der Kommandozeile kompilieren wollen? Dabei soll es egal sein, aus welchem Verzeichnis wir javac aufrufen.
+
+#### Angenommen, wir haben eine Java-Datei auf unserem Rechner unter /home/uni/propra1/pfad/Foo.java liegen. Die erste Zeile der Datei ist package pfad;. Wie lautet der Klassenpfad?
+
+#### Entfernen Sie in der Klasse StaticInit die Zeile private static final String HELLO = hello();. Was passiert dann und warum? Es wird doch gar keine statische Methode mehr aufgerufen, die die Initialisierung anstoßen kann? (Oder vielleicht doch‽)
+
+#### Schreiben Sie ein Programm, das die Länge der Ankathete und Gegenkathete eines rechtwinkligen Dreiecks übergeben bekommt und die Länge der Hypotenuse und den Winkel zwischen Ankathete und Hypotenuse ausrechnet. Verwenden Sie statische Imports für Methoden aus der Math-Klasse.
+
+#### Erstellen Sie zwei Klassen A und B. Legen Sie A in das Default Package und B in de.propra. Versuchen Sie in B eine Instanz von A zu erzeugen.
+
+#### Schreiben Sie zwei Klassen Greeter und Start. In Greeter soll es eine greet Methode geben, die eine Grußbotschaft als String zurückgibt und in Start soll die main-Methode liegen, die greet aufruft und die Grußbotschaft ausgibt. Verpacken Sie die kompilierten Klassen als startbare .jar-Datei.
+
+#### Geben Sie Ihrer Begrüßungsanwendung etwas Struktur.
+##### Legen Sie beide Klassen in das Package de.propra.greet und verstecken Sie die Greeter-Klasse, indem Sie die Klasse package-private machen. Testen Sie die Sichtbarkeit, indem Sie eine dritte Klasse außerhalb des Packages schreiben und versuchen, Greeter zu verwenden.
+##### Legen Sie die Start-Klasse in de.propra.greet und Greeter in de.propra.greet.impl. Können Sie Greeter immer noch package-private machen?
