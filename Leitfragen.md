@@ -152,17 +152,63 @@ public class Zeit implements Comparable<Zeit> {
 -
 
 #### Angenommen, wir haben eine Java-Datei auf unserem Rechner unter /home/uni/propra1/pfad/Foo.java liegen. Die Klasse verwendet das Default Package. Wie lautet der Klassenpfad, wenn wir die Datei auf der Kommandozeile kompilieren wollen? Dabei soll es egal sein, aus welchem Verzeichnis wir javac aufrufen.
+-
 
 #### Angenommen, wir haben eine Java-Datei auf unserem Rechner unter /home/uni/propra1/pfad/Foo.java liegen. Die erste Zeile der Datei ist package pfad;. Wie lautet der Klassenpfad?
+-
 
 #### Entfernen Sie in der Klasse StaticInit die Zeile private static final String HELLO = hello();. Was passiert dann und warum? Es wird doch gar keine statische Methode mehr aufgerufen, die die Initialisierung anstoßen kann? (Oder vielleicht doch‽)
+-
 
 #### Schreiben Sie ein Programm, das die Länge der Ankathete und Gegenkathete eines rechtwinkligen Dreiecks übergeben bekommt und die Länge der Hypotenuse und den Winkel zwischen Ankathete und Hypotenuse ausrechnet. Verwenden Sie statische Imports für Methoden aus der Math-Klasse.
+-
 
 #### Erstellen Sie zwei Klassen A und B. Legen Sie A in das Default Package und B in de.propra. Versuchen Sie in B eine Instanz von A zu erzeugen.
+-
 
 #### Schreiben Sie zwei Klassen Greeter und Start. In Greeter soll es eine greet Methode geben, die eine Grußbotschaft als String zurückgibt und in Start soll die main-Methode liegen, die greet aufruft und die Grußbotschaft ausgibt. Verpacken Sie die kompilierten Klassen als startbare .jar-Datei.
+-
 
 #### Geben Sie Ihrer Begrüßungsanwendung etwas Struktur.
 ##### Legen Sie beide Klassen in das Package de.propra.greet und verstecken Sie die Greeter-Klasse, indem Sie die Klasse package-private machen. Testen Sie die Sichtbarkeit, indem Sie eine dritte Klasse außerhalb des Packages schreiben und versuchen, Greeter zu verwenden.
 ##### Legen Sie die Start-Klasse in de.propra.greet und Greeter in de.propra.greet.impl. Können Sie Greeter immer noch package-private machen?
+-
+
+### Aufgaben/Leitfragen Anwendungen bauen mit Gradle
+
+#### In einem Gradle-Projekt mit einer Standard-Konfiguration liegt eine Java-Datei unter dem Pfad src/main/java/main/App.java. Wie lautet die erste Zeile der Java-Datei, die vom Java-Compiler beachtet wird?
+-
+
+#### In den Dateien zu dieser Woche finden Sie im Ordner gradle_uebung ein Beispielprojekt für diese Aufgabe.
+##### Führen Sie das Programm aus. Das Programm gibt eine Zeile aus, die mit Works: beginnt.
+##### Generieren Sie eine gezippte Version (Distribution) des Programms, entpacken Sie die Zip-Datei und starten Sie das Programm. (Sie finden des Ergebnis im build-Ordner.)
+##### Werfen Sie einen Blick in den lib-Ordner der Distribution (also in der zip-Datei). Hätten Sie mit so vielen Dateien gerechnet?
+##### Finden Sie heraus, warum ./gradlew tasks und ./gradlew ta das Gleiche machen. Was macht ./gradlew t? (Suchen Sie die Dokumentation von Gradle.)
+-
+##### Finden Sie das kürzestmögliche Kommando der Form ./gradlew <XXX> um eine gezippte Version der Anwendung zu generieren. (Tipp: Sie benötigen zwei Buchstaben.)
+-
+##### Was ist der Unterschied zwischen den Tasks assemble und build?
+-
+
+#### Schreiben Sie ein Programm, das Namen und Telefonnummern verwalten kann. Wir gehen der Einfachheit halber davon aus, dass Namen und Nummern jeweils eindeutig sind. Verwenden Sie gradle, um das Programm zu bauen.
+##### Das Programm soll die Datenstruktur BiMap aus der Bibliothek Google Guava verwenden.
+##### Als Schlüssel und Wert der BiMap verwenden Sie jeweils Strings.
+##### Die Map können Sie vorab mit Werten befüllen (z. B. im Konstruktor).
+##### Das Programm soll dann mit zwei Parametern aufgerufen werden: Der erste Parameter ist entweder name oder nummer und gibt an, ob nach einem Namen oder einer Telefonnummer gesucht wird. Der zweite Parameter ist der Name bzw. die Telefonnummer, nach dem bzw. der gesucht wird. Das Programm soll folgendermaßen aufgerufen werden: ```sh
+    ./gradlew run --args="name Jens"
++49 211 81-10714
+
+./gradlew run --args="nummer '+49 211 81-10714'"
+Jens
+
+./gradlew run --args="nummer 123"
+Nicht vorhanden
+```
+
+#### Wichtig bei der Software-Entwicklung ist zu wissen, welche Arbeit wir uns nicht selber machen müssen! In dieser Aufgabe sollen Sie daher etwas recherchieren.
+##### Wir wollen Excel-Tabellen in einem Programm einlesen. Finden Sie eine Bibliothek, mit der das geht.
+-
+##### Als Alternative wollen wir .csv-Dateien (Comma Separated Values) einlesen. Welche Bibliothek könnte da weiterhelfen?
+-
+##### Die Kommandozeilenprogramme, die wir kennengelernt haben, benutzen im Normalfall Parameter, die auf der Kommandozeile übergeben werden. Zum Beispiel können wir unter Unix ein Verzeichnis als Liste mit allen versteckten Dateien mit ls -a -l anzeigen lassen. Es funktionieren aber auch ls -l -a, ls -la oder ls -al. Ein Blick auf die Handbuchseite von ls zeigt, dass es noch viel mehr Schalter und folglich sehr viele gültige Kombinationen der Schalter gibt. So etwas selber zu schreiben, indem wir selbst die Programmparameter untersuchen, ist keine echte Freude. Aber zum Glück gibt es Bibliotheken. Finden Sie eine!
+-
