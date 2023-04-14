@@ -501,3 +501,57 @@ git-Kommandos:
 - `add` // Änderungen hinzufügen
 - `commit` // Änderung in staging area mit Message zusammenfassen
 - `push` // Änderungen auf github hochladen
+
+
+# Woche 2
+
+## Klassenpfade, Packages und Jars
+
+Wie werden Klassen von der JVM gefunden und geladen
+### Class Loading
+- Bytecode der Klasse wird in die JVM geladen
+- Validierung von Struktur, Opcodes, ...
+- Allokation des notwendigen Speichers für die Klasse
+- Initialisieren der statischen Attribute mit Standardwerten
+- Aufrufen der statischen Initializer / Initialisierungscode
+
+### Class Loaders
+- Boot Class Loader (nativer Code, in der JVM eingebaut) // Lädt Klassen die in Java mitgeliefert werden (Standardbibliothek)
+- Plattform Class Loader (früher Extension Class Loader) // Lädt Klassen die in der JVM installiert werden
+- Application Class Loader (früher System Class Loader) // Lädt Anwendungen (eigene Klassen)
+
+### App Class Loader
+- Lädt die Bytes der Anwendungsklassen in die JVM
+- Gesucht wird im Klassenpfad
+- Default ist das aktuelle verzeichnis
+- Kann mit -cp überschrieben werden
+
+### Classpath
+- Orte, an denen der Application Classloader nach Klassen sucht
+- Wenn ein Pfad angegeben wird, wird der Standardpfad überschrieben
+- Unterverzeichnisse werden nicht automatisch durchsucht
+
+### Package
+- Namensraum für Klassen
+- Package + Klassenname bilden den Fully Qualified Name(FQN)
+- Das Package wird am Anfang der Datei deklariert `package de.propra.foo.bar`
+- Die Datei muss ausgehend von einem Classpath Eintrag in dem Verzeichnis `de/propra/foo/bar` liegen
+- Klassen werden über den FQN referenziert
+
+### Default Package
+- Wenn kein Package angegeben ist, liegen Klassen im Default Package
+- Klassen aus dem Default Package können nicht importiert werden
+- Default Package sollte nicht verwendet werden
+
+### Sichtbarkeits-Modifier
+- Attribute und Methoden:
+  - public
+  - private
+  - protected
+  - keinen
+- Klassen:
+  - public
+  - private (nur innere Klassen)
+  - keinen
+ Ohne Sichtbarkeits-Modifier sind die Sachen Package-Private (nur Sichtbar für Klassen im gleichen Package)
+ 
