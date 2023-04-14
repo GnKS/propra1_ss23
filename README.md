@@ -578,3 +578,166 @@ Convention over Configuration
 - ./gradlew check
 - ./gradlew run
 - ./gradlew distZip
+
+## Generics
+
+Generics auch paramtetrischen Polymorphismus genannt sind eine Form der Abstraktion bei der Variablen für Typen eingeführt werden.
+Somit kann man Code schreiben der in verschiedenen Kontexten wiederverwendet werden kann.
+Anwendungsbereiche sind Sammlungen von Objekten wie Listen, Mengen und Maps.
+
+### Statische Typisierung
+Solche Sprachen (wie java) können manche Fehler zur Compile-Zeit erkennen.
+
+### Generische Datentypen
+Start mit einem Beispiel (Klasse Tupel, die zwei beliebige Objekte auch von unterschiedlichem Typ speichern kann)
+```java
+public class ObjectTupel {
+
+    private Object first;
+    private Object second;
+
+    public ObjectTupel(Object first, Object second) {
+        this.first = first;
+        this.second = second;
+    }
+
+    public Object getFirst() {
+        return first;
+    }
+
+    public Object getSecond() {
+        return second;
+    }
+
+}
+```
+
+Diese Version kann die Vorteile der statischen Typisierung nicht ausnutzen.
+Zur Verwendung müssten man in dem Code, der das Tupel verwendet prüfen ob die Datentypen den Erwartungen entsprechen.
+
+```java
+// Erwartet ein Tupel aus einem Zeichen und einer Zahl
+public static void repeat(ObjectTupel t) {
+    if (t.getFirst() instanceof Character &&
+            t.getSecond() instanceof Integer) {
+        for (int i = 0; i < (Integer) t.getSecond(); i++) {
+            System.out.print((Character) t.getFirst());
+        }
+    }
+    else {
+        // ??? Keine Ahnung, was hier zu tun ist
+    }
+}
+
+public static void main(String[] args) {
+    ObjectTupel t1 = new ObjectTupel('f', 4);
+    repeat(t1);
+
+    ObjectTupel t1fail = new ObjectTupel("f", 3);
+    repeat(t1fail); // ???
+}
+```
+
+Besser ist es, den Code mit Generics so schreiben, dass für first und second bei der Deklaration einer Variablen jeweils ein konkreter Typ angegeben werden muss.
+
+```java
+public class Tupel<T1, T2> {
+
+    private T1 first;
+    private T2 second;
+
+    public Tupel(T1 first, T2 second) {
+        this.first = first;
+        this.second = second;
+    }
+
+    public T1 getFirst() {
+        return first;
+    }
+
+    public T2 getSecond() {
+        return second;
+    }
+
+}
+```
+
+Hier kann man dann eine viel einfachere und typsichere repeat-Methode implementieren. In dieser Implementierung verhindert der Compiler, dass man nicht passende Tupel-Instanzen an repeat übergibt.
+
+```java
+public static void repeat(Tupel<Character, Integer> tupel) {
+    // Keine Casts und Absicherung notwendig
+    // der Compiler verhindert falsche Typen
+    for (int i = 0; i < tupel.getSecond(); i++) {
+        System.out.print(tupel.getFirst());
+    }
+}
+
+public static void main(String[] args) {
+    // Compiler prüft Typen und die folgenden zwei Zeilen kompilieren einwandfrei:
+    Tupel<Character, Integer> t2 = new Tupel<>('o', 10);
+    repeat(t2);
+
+    // Kompiliert nicht, weil "o" kein Character ist:
+    // Tupel<Character, Integer> t2fail1 = new Tupel<>("o", 10);
+
+    Tupel<String, Integer> t2fail2 = new Tupel<>("0", 10);
+    // Kompiliert nicht, weil der Typ nicht zum Parameter von repeat passt:
+    // repeat(t2fail2);
+}
+```
+
+### Type Constraints
+
+Wenn man eine typsichere Implementierung schreibt, muss man der Klasse vorgeben, der im Fall eines Binärbaum beispiels, einen Typparameter `T` akzeptiert der `Comparable` implementiert. In java geht das mit Hilfe eines type constraints:
+
+```java
+public class Tree<T extends Comparable> {
+    // ...
+}
+```
+
+Die Tree-Klasse akzeptiert hier Datentypen T, die Comparable implementieren.
+So kann man z.B. `Tree<String>` instanziieren, `Tree<Object>` aber nicht.
+
+Da `Comparable` ein generisches Interface ist, erwartet es einen Parameter mit dem die Klasse vergleichbar ist.
+
+```java
+public interface Comparable<T> {
+    public int compareTo(T o);
+}
+```
+
+Die korrekte Definition eines parametrisierten Binärbaums ist also:
+
+```java
+public class Tree<T extends Comparable<T>> {
+    // ...
+}
+```
+
+Beachte: Beide `T` repräsentieren in der Signatur die selbe Klasse.
+
+### Generische Methoden
+
+Nicht nur Klassen, sondern auch Methoden können parametrisiert werden.
+Beispiel einer statischen Hilfsfunktion die ein Array in eine generische Liste umwandelt:
+```java
+public static <T> List<T> asList(T[] array) {
+    // null-Check wäre wsh. sinnvoll, nutzen Sie lieber die fertige JDK-Methode
+    List<T> list = new ArrayList<T>();
+    for(T element: array) {
+        list.add(element);
+    }
+    return list;
+}
+```
+
+Aufrufen der Methode:
+```java
+List<Integer> numbers = asList(new Integer[]{1,2,3});
+List<String> strings = asList(new String[]{"Korra", "Aang"});
+
+// der folgende Ausdruck kompliert aber nicht
+List<Integer> numbers = asList(new String[]{"1","2","3"});
+```
