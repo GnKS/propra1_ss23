@@ -194,7 +194,8 @@ public class Zeit implements Comparable<Zeit> {
 ##### Das Programm soll die Datenstruktur BiMap aus der Bibliothek Google Guava verwenden.
 ##### Als Schlüssel und Wert der BiMap verwenden Sie jeweils Strings.
 ##### Die Map können Sie vorab mit Werten befüllen (z. B. im Konstruktor).
-##### Das Programm soll dann mit zwei Parametern aufgerufen werden: Der erste Parameter ist entweder name oder nummer und gibt an, ob nach einem Namen oder einer Telefonnummer gesucht wird. Der zweite Parameter ist der Name bzw. die Telefonnummer, nach dem bzw. der gesucht wird. Das Programm soll folgendermaßen aufgerufen werden: ```
+##### Das Programm soll dann mit zwei Parametern aufgerufen werden: Der erste Parameter ist entweder name oder nummer und gibt an, ob nach einem Namen oder einer Telefonnummer gesucht wird. Der zweite Parameter ist der Name bzw. die Telefonnummer, nach dem bzw. der gesucht wird. Das Programm soll folgendermaßen aufgerufen werden: 
+```
     ./gradlew run --args="name Name"
 +49 211 81-10714
 
