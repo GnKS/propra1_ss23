@@ -213,3 +213,44 @@ Nicht vorhanden
 -
 ##### Die Kommandozeilenprogramme, die wir kennengelernt haben, benutzen im Normalfall Parameter, die auf der Kommandozeile übergeben werden. Zum Beispiel können wir unter Unix ein Verzeichnis als Liste mit allen versteckten Dateien mit ls -a -l anzeigen lassen. Es funktionieren aber auch ls -l -a, ls -la oder ls -al. Ein Blick auf die Handbuchseite von ls zeigt, dass es noch viel mehr Schalter und folglich sehr viele gültige Kombinationen der Schalter gibt. So etwas selber zu schreiben, indem wir selbst die Programmparameter untersuchen, ist keine echte Freude. Aber zum Glück gibt es Bibliotheken. Finden Sie eine!
 -
+
+###  Aufgaben/Leitfragen Generics
+
+#### In einer Hosentasche kann genau ein Ding gespeichert werden oder die Hosentasche kann leer sein. Eine Hose hat zwei Taschen und es ist natürlich vollkommen klar, dass man nicht beliebige Dinge in die Taschen steckt – unsere Hosen sind selbstverständlich typsicher! Schreiben Sie also eine parametrisierte Klasse Tasche, in der ein Datentyp gespeichert wird, und eine Klasse Hose, die zwei Taschen hat. Ihre Implementierung soll folgendermaßen benutzt werden:
+```java
+ public static void main(String[] args) {
+    Hose<Taschentuch, Portemonnaie> hose = new Hose<>();
+    hose.inDieLinkeTaschePacken(new Taschentuch());
+    System.out.println(hose); // links: Taschentuch, rechts: leer
+
+    // kompiliert nicht
+    // hose.inDieRechteTaschePacken(new Taschentuch());
+}
+```
+
+#### Wir haben folgende Java-Klasse, die einen Wert vom Typ T speichert.
+```java
+public class ConvertibleBox<T> {
+  private final T content;
+
+  public ConvertibleBox(T content) {
+    this.content = content;
+  }
+
+  public static void main(String[] args) {
+    ConvertibleBox<Integer> box = new ConvertibleBox<>(42);
+
+    String asString = box.convert(e -> "Wert: " + e);
+    System.out.println(asString);
+
+    Double asDouble = box.convert(e -> Math.PI * e);
+    System.out.println(asDouble);
+  }
+}
+```
+Es fehlt der Klasse eine convert-Methode, die den Inhalt der Box mithilfe einer Function<T,R> in verschiedene Datentypen konvertieren kann.
+##### Schreiben Sie die Methode. Tipp: Die Methode muss generisch sein.
+-
+
+##### Warum können wir das nicht mit einem zweiten Typparameter für die Klasse erledigen?
+-
