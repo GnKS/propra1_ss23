@@ -77,10 +77,30 @@ public class MyClass {
 ### Aufgaben/Leitfragen Idiomatische Verwendung von Schleifen
 
 #### Fassen Sie zusammen, welche Schleife für welchen Zweck benutzt wird.
--
+- Rekursion:
+    - Algorithmen elegant ausdrücken (wenn man flexen will)
+    - selten gute Idee außer diese Variante ist sehr viel einfacher als eine iterative Version
+- Enhanced For Loop:
+    - Wird verwendet wenn man über eine Sammlung von Werten iteriert
+- For-Loop:
+    - Wenn mehr als ein Element gleichzeitig oder Index benötigt wird
+- While und Do-While:
+    - Wenn es keine feste Grenze an Anzahl der Iterationen gibt
+    - Do while führt einmal aus bevor die Bedingung geprüft wird
 
 #### Schreiben Sie eine Methode, die eine Liste von Strings bekommt und diese auf der Konsole ausgibt. Verwenden Sie die richtige Art der Iteration.
--
+- ```java
+        static void iteratorBoy(List<String> s){
+        for(String n : s){
+            System.out.println(n);
+        }
+    }
+
+    public static void main(String[] args) {
+        List<String> stringyBoys = List.of("eins", "zwei", "drei", "vier", "fünf");
+        iteratorBoy(stringyBoys);
+    }
+  ```
 
 #### Erklären Sie, was hier passiert: 
 ```java
