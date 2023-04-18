@@ -121,7 +121,8 @@ for(int[] array: komischeMatrix) {
 
 komischeMatrix.forEach(array -> System.out.println(array[0])); // Ausgabe: 1 3 oder 42 42?
 ```
--
+- Bei Liste zahlen will jemand die Zahlen aus der Liste zahlen auf 42 setzen da List.of aber eine unveränderliche Liste erzeugt ist die ausgabe 1 2 3
+- Bei komischeMatrix ist die Ausgabe 42 42 da das Array an Stelle 0 auf 42 gesetzt wird und die Erzeugung der Matrix nicht unveränderlich ist
 
 #### Wir wollen einen Marsrover steuern. Der Rover hat eine KI eingebaut, die den Rover automatisch einen Schritt in einem Suchraster ausführen lässt. Das Interface des Rovers ist
 ```java
@@ -131,7 +132,13 @@ public interface Rover {
 }
 ```
 #### Schreiben Sie ein Methode wasserSuchen, die den Marsrover bewegt, bis er Wasser gefunden hat. Verwenden Sie die passende Schleife.
--
+- ```java
+    public void searchWater(){
+        while(wasserGefunden() == false){
+            step();
+        }
+    }
+  ```
 
 #### Wir wollen die Rennergebnisse eines Marathons ausgeben. Jede:r Teilnehmer:in ist ein Objekt vom Typ Ergebnis zugeordnet, das Name und die benötigte Zeit speichert. Es gibt einen Typ Zeit, der das Comparable-Interface erweitert.
 ```java
