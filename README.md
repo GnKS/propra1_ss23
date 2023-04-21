@@ -741,3 +741,56 @@ List<String> strings = asList(new String[]{"Korra", "Aang"});
 // der folgende Ausdruck kompliert aber nicht
 List<Integer> numbers = asList(new String[]{"1","2","3"});
 ```
+
+
+# Woche 3
+
+## Funktionale Interfaces und Lambda-Ausdrücke
+
+Lambda Ausdrücke können immer verwendet werden wenn ein Funktionales Interface benutzt wird.
+Im Lambda Ausdruck wird der Code implementiert der ausgeführt wird wenn die abstrakte Methode des Interfaces aufgerufen wird.
+
+Beispiel:
+```java
+@FunctionalInterface
+public interface Blargh {
+    int plong(int n);
+}
+
+Blargh blargh = a -> a + 1;
+
+System.out.println(blargh.plong(41)); // 42
+```
+
+### Für diese Woche wichtige Interfaces
+- Consumer a -> void
+  - nimmt einen Parameter und führt einen sogenannten Nebeneffekt aus (tut etwas, ohne einen Rückgabewert zu produzieren)
+    ```java
+    Consumer<Double> incPrint = a -> System.out.println(a + 1);
+    incPrint.accept(2.14); // printet 3.14
+    ```
+- Function a -> b
+  - nimmt einen Parameter und gibt einen Wert zurück
+  ```java
+  Function<Double, Integer> twiceFloor = q -> (int)(2 * q);
+  twiceFloor.apply(3.14); // 6
+  ```
+- BiFunction (a, b) -> c
+  - nimmt zwei Parameter und gibt einen Wert zurück
+  ```java
+  BiFunction<Integer, Double, String> multiplyConcat = (n, q) -> "Ergebnis: " + (n * q);
+  multiplyConcat.apply(2, 1.359); // "Ergebnis: 2.718"
+  ```
+- Predicate a -> boolean
+  - nimmt einen Parameter und gibt einen Boolean zurück
+  ```java
+  Predicate<Integer> isEven = n -> (n % 2) == 0;
+  isEven.test(41); // false
+  ```
+- Supplier () -> a
+  - nimmt keine Parameter gibt einen Wert zurück
+  ```java
+  Supplier<Integer> throwDice = () -> (int)(Math.random() * 6) + 1;
+  throwDice.get(); // (beispielsweise) 2
+  throwDice.get(); // (beispielsweise) 4
+  ```
