@@ -794,3 +794,38 @@ System.out.println(blargh.plong(41)); // 42
   throwDice.get(); // (beispielsweise) 2
   throwDice.get(); // (beispielsweise) 4
   ```
+
+### Methoden-Referenzen
+
+In folgendem Code
+```java
+public static void main(String[] args) {
+    List<Integer> integers = new ArrayList<>();
+    integers.addAll(List.of(345, 533, 374, 11, 932, 357));
+
+    Collections.sort(integers, (a, b) -> PrimeComparator.compareByPrimeFactor(a, b));
+
+    integers.forEach(s -> System.out.println(s));
+}
+
+```
+
+können die Lambda ausdrücke (`Collections.sort(integers, (a, b) -> PrimeComparator.compareByPrimeFactor(a, b));` und `integers.forEach(s -> System.out.println(s));`) durch Methoden Referenzen ersetzt werden die mit einem doppelten Doppelpunkt `::` annotiert ist.
+
+somit werden die Lamda ausdrücke zu `Collections.sort(integers, PrimeComparator::compareByPrimeFactor);` und `integers.forEach(System.out::println);`
+
+Hinter dem `::` steht ein Methodenname, davor eine Klasse oder eine Instanz einer Klasse.
+Wenn man eine statische Methode verwenden will, steht vor dem :: eine Klasse.
+
+Bei Instanzmethoden gibt es zwei Fälle. 
+  -Zum einen gibt es den Fall, wie in dem Beispiel, wo eine Methode auf einer bestimmten Instanz aufgerufen wird. In diesem Fall steht vor dem :: die       Instanz (hier System.out), auf der die Methode (println) aufgerufen wird.
+  -Es gibt aber auch den Fall, wo zwar eine Instanzmethode aufgerufen werden soll, aber die Instanz der erste Parameter des Lambda-Ausdrucks ist.
+  wie hier zu sehen: ` Collections.sort(people, (a,b) -> a.vergleiche(b));`
+  hier kann man nicht a::vergleiche schreiben da die Variable a nicht existiert.
+  Wenn die methode nicht statisch ist wird das erste Argument des Lambda ausdrucks (hier `a`) als Objekt benutzt, auf dem die Methode aufgerufen wird.
+  Also kann man `Personen::vergleiche` schreiben.
+
+Es gibt auch Methodenreferenzen für Konstruktoren die man mit `Klasse::new` notiert.
+
+Methodenreferenzen können Lambda-Ausdrücke nicht komplett ersetzen, da eine Methodenreferenz keinerlei Änderungen an den Argumenten vornehmen kann. Sie sind also „nur“ ein Ersatz für Ausdrücke der Form (a1,…,an) → methode(a1,…,an).
+
