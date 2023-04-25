@@ -895,3 +895,23 @@ Bsp:
 
 Dabei würde rf init nehmen und den ersten wert aus coll dazu addieren => 11, dann nimmt rf 11 und addiert den zweiten wert aus coll => 13,
 dann nimmt rf den letzten Wert aus coll und addiert diesen auf die 13 => 16.
+
+### flatMap
+
+Variante von Map. Dabei mapped man eine Funktion f über eine Kollektion, wobei die Funktion f mehr als ein Ergebnis produziert (f gibt also selbst eine Kollektion zurück).
+
+flatMap beispiel:
+Man will eine Web-Spider schreiben. Man hat bereits fetch was eine Website übergeben bekommt und die verlinkten Seiten in einer `List<Website>` zurück gibt. Map würde daraus aber eine `List<List<Website>>` machen.
+
+Für genau solche Fälle gibt es flatMap, das die übergebene Funktion auf eine Liste anwendet, das Resultat dann aber „flachklopft“, also die einzelnen Listen im Ergebnis aneinanderhängt.
+Code:
+```java
+public static <A, B> Collection<B> flatMap(Function<A, Collection<B>> f, Collection<A> coll) {
+  ArrayList<B> result = new ArrayList<>();
+  for (A a : coll) {
+    result.addAll(f.apply(a));
+  }
+  return result;
+}
+```
+Der unterschied zur Map implementierung ist, dass man addAll statt add aufruft.
