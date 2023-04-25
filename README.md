@@ -829,3 +829,69 @@ Es gibt auch Methodenreferenzen für Konstruktoren die man mit `Klasse::new` not
 
 Methodenreferenzen können Lambda-Ausdrücke nicht komplett ersetzen, da eine Methodenreferenz keinerlei Änderungen an den Argumenten vornehmen kann. Sie sind also „nur“ ein Ersatz für Ausdrücke der Form (a1,…,an) → methode(a1,…,an).
 
+
+## Funktionen höherer Ordnung
+
+Funktionen höherer Ordnung sind Funktionen die ein Funktionales Interfaces als Parameter bekommen und ein Funktionales Interface zurück geben.
+(z.B. `foreach` ist eine Funktion höherer Ordnung)
+
+### Map
+Hat den Zweck, eine Kollektion coll zu transformieren, indem eine übergebene Funktion f auf jedes Element a der Kollektion angewendet wird.
+z.B. nimmt f eine Zahl und quadriert sie. coll enthält die Zahlen 1, 2, 3. map(f, coll) gibt dann eine Neue Kollektion mit den Zahlen 1, 4, 9 zurück.
+
+Beispiel Implementierung und Verwendung:
+```java
+public static <A, B> Collection<B> map(Function<A, B> f, Collection<A> coll) {
+  Collection<B> result = new ArrayList<>();
+  for (A a : coll) {
+    result.add(f.apply(a));
+  }
+  return result;
+}
+
+public static void main(String[] args) {
+  List<Integer> elements = List.of(1, 2, 3);
+  Function<Integer, Integer> square = a -> a * a;
+  Collection<Integer> squares = map(square, elements);
+  System.out.println(squares); // => [1, 4, 9]
+}
+```
+
+### Filter
+Filter bekommt ein Prädikat übergeben und fügt nur die Elemente der Kollektion hinzu für die der Filter wahr ist.
+Beispiel:
+- f nimmt eine Zahl entgegen und gibt genau dann true zurück, wenn sie gerade ist.
+- coll enthält die Zahlen 1, 2, 3, 4.
+- filter(f, coll) gibt eine neue Kollektion mit den Zahlen 2, 4 zurück.
+
+Vernwendungsbeispiel:
+```java
+List<Integer> elements = List.of(1, 2, 3, 4, 5, 6);
+Predicate<Integer> even = e -> e % 2 == 0;
+Collection<Integer> gerade = filter(even, elements);
+System.out.println(gerade); // => [2, 4, 6]
+```
+
+### Reduce
+Kann verwendet werden, um eine Kollektion mit Hilfe einer BiFunction auf einen Wert zu reduzieren.
+Implementation:
+```java
+public static <A, E> A reduce(A init,
+                              BiFunction<A, E, A> rf,
+                              Collection<E> coll) {
+  A result = init;
+  for (E e : coll) {
+    result = rf.apply(result, e);
+  }
+  return result;
+}
+```
+
+Die reduce-Funktion arbeitet mithilfe der BiFunction nacheinander die Elemente der Kollektion in den Akkumulator ein.
+Bsp:
+- init sei 10
+- rf sei a, b → a + b
+- coll sei die Liste 1, 2, 3.
+
+Dabei würde rf init nehmen und den ersten wert aus coll dazu addieren => 11, dann nimmt rf 11 und addiert den zweiten wert aus coll => 13,
+dann nimmt rf den letzten Wert aus coll und addiert diesen auf die 13 => 16.
