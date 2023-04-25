@@ -915,3 +915,128 @@ public static <A, B> Collection<B> flatMap(Function<A, Collection<B>> f, Collect
 }
 ```
 Der unterschied zur Map implementierung ist, dass man addAll statt add aufruft.
+
+## Streams
+In Java werden map, filter und reduce nicht direkt auf Kollektionen verwendet, sondern sind Bestandteil der sogenannten Streams.
+
+Ein Stream ist keine Datenstruktur, wie eine Liste oder eine Menge, sondern vielmehr die Definition einer Verarbeitungs-Pipeline. Diese Pipeline wird am Anfang mit Daten gefüttert, enthält in der Mitte Verarbeitungsschritte (sogenannte Intermediate Operations) und am Ende wird das Endergebnis in einer sogenannten terminalen Operation generiert.
+
+
+### Erzeugen
+
+Am häufigsten wird ein Stream aus einer Datenstruktur heraus, z. B. einer Liste, erzeugt. Dazu können wir die Methode stream() auf den Kollektionen aufrufen. Um ein Array als Eingabe zu verwenden, gibt es die statische Methode stream der Klasse Arrays:
+```java
+List<Integer> integers = List.of(1, 2, 3, 4, 5, 6);
+Stream<Integer> integerStream = integers.stream();
+
+Integer[] intArray = {1, 2, 3, 4, 5, 6};
+Stream<Integer> intStream = Arrays.stream(intArray);
+```
+Es können auch ohne Kollektionen Streams erzeugt werden. Dazu gibt es die Methoden generate und iterate der Klasse Stream.
+Die generate-Methode bekommt einen Supplier übergeben und generiert einen Stream von Werten, die durch wiederholte Aufrufe des Suppliers erzeugt wurden.
+```java
+Stream<Double> generate = Stream.generate(Math::random);
+// enthält (beispielsweise) 0.945106531853138, 0.2591711737130885, 0.089162213972661, ...
+```
+Die iterate-Methode funktioniert ähnlich wie generate, allerdings hat man eine Nachfolgerfunktion, die den letzten erzeugten Wert als Eingabe erhält.
+Die iterate-Methode benötigt einen Initialwert x, der als erster Wert in den Stream übernommen wird, und einen UnaryOperator f, der aus einem Wert den nächsten Wert ausrechnet. Der Stream besteht dann aus den Folgegliedern x,f(x),f(f(x)), f(f(f(x))), …
+```java
+UnaryOperator<Integer> successor = e -> e + 1;
+Stream<Integer> nat = Stream.iterate(0, successor); // enthält 0, 1, 2, 3, ...
+```
+generate und iterate erzeugen unendliche Streams.
+
+### Streams mit primitiven Datentypen
+
+Neben den Streams von Referenzdatentypen gibt es auch Streams, in denen primitive Datentypen verarbeitet werden können. Es gibt spezielle Streams für int, long und double Werte. Diese enthalten bestimmte Methoden wie sum und average die nicht für allgemeine Streams sinvoll sind.
+IntStream und LongStream haben außerdem Methoden, um fortlaufende Zahlen in einem bestimmten Bereich zu erzeugen, ohne iterate verwenden zu müssen.
+```java
+IntStream bis999 = IntStream.range(0, 1000);
+IntStream bis1000 = IntStream.rangeClosed(0, 1000);
+```
+
+### Intermediate Operationen
+
+Transformieren den Stream-Inhalt z.B. mit map flatMap und selektiert wird mit filter.
+Alle intermediate Operations geben selber einen Stream zurück.
+Weitere Intermediate Operationen:
+
+- limit(long n) bricht den Stream nach n Elementen ab (behält also nur die ersten n Elemente).
+- skip(long n) wirft die ersten n Elemente weg.
+- takeWhile(Predicate p) bricht den Stream ab, sobald das erste Element verarbeitet wird, für das p falsch ist; List.of(1,3,4,6,7).stream().takeWhile(n → n % 2 == 1) enthält also nur die beiden (ungeraden) Zahlen 1 und 3.
+- dropWhile(Predicate p) wirft solange Elemente weg, bis das erste Element verarbeitet wurde, für das p falsch ist; List.of(1,3,4,6,7).stream().dropWhile(n → n % 2 == 1) enthält also nur die Zahlen 4, 6, 7.
+- peek(Consumer c) führt einen Consumer für jedes Element aus und gibt das Element unverändert weiter. Die Funktion wird hauptsächlich für das Debugging oder ggf. Logging verwendet.
+- distinct entfernt alle Duplikate aus dem Stream.
+- sorted sortiert die Elemente des Streams. Es gibt zwei Varianten: Eine verwendet die natürliche Ordnung von Elementen, die das Comparable-Interface verwenden, die andere verwendet einen expliziten Comparator.
+
+### Terminale Operationen
+
+Am Ende eines Streams steht genau eine terminale Operation, die den Stream in ein Ergebnis überführt. Dabei wird der Stream „verbraucht“ und wir können keine weiteren Operationen mehr auf dem Stream ausführen.
+```java
+IntStream intStream = IntStream.range(1, 5)
+    .map(e -> e * 2);
+intStream.forEach(System.out::println); // geht
+intStream.forEach(System.out::println); // Exception
+```
+
+Ein Stream kann nur einmal für eine Verarbeitung verwendet werden, daher ist es sinnvolll, die Lebensdauer eines Streams zu begrenzen. Man sollte also nach Möglichkeit Streams nicht in Feldern einer Klasse speichern, beziehungsweise als Parameter oder Rückgabewerte von Methoden verwenden.
+
+Zwei häufig genutzte Operationen sind toList und toArray
+```java
+Stream<Integer> objStream = IntStream.range(1, 5)
+    .map(e -> e * 2)
+    .boxed();
+List<Integer> intList = objStream.toList(); // [2, 4, 6, 8]
+```
+
+Weitere, oft genutzte terminale Operationen der Klasse Stream sind:
+- min(Comparator c) und max(Comparator c), die das Minimum bzw. Maximums bezüglich der Sortierung, die durch den Comparator vorgegeben wird, zurückgeben.
+- List.of("foo", "fizz").stream().min(Comparator.comparingInt(String::length)) // Optional[foo]
+- count(), das die Anzahl der Elemente des Streams zurückgibt.
+- List.of("foo", "fizz").stream().count() // 2
+- anyMatch(Predicate p), allMatch(Predicate p) und noneMatch(Predicate p), die prüfen ob das Prädikat p für irgendeinen/alle/keinen Wert im Stream wahr ist.
+- List.of("foo", "fizz").stream().anyMatch(s → s.length() == 3) // true
+- findFirst und findAny, die den ersten bzw. irgendeinen Wert des Streams zurückgeben. Die beiden Methoden verhalten sich für normale Streams identisch; es wird das erste Element des Streams zurückgegeben. Im Falle einer parallelen Berechnung (siehe Java Upgrade) wird bei findAny das Element zurückgegeben, das als erstes berechnet wurde.
+
+Einige dieser terminalen Operationen geben ein Optional als Ergebnis zurück, um den Fall eines leeren Streams sicherer zu handhaben.
+
+## Reduktionen
+
+### Collect und Reduce
+
+In der Stream-API ist reduce eine terminale Operation auf einem Stream
+```java
+Integer reduce = Stream.of(3, 4)
+    .map(e -> e * e)
+    .reduce(0, (a, e) -> a + e);
+```
+Die reduce-Methode verwendet eine BiFunction, die ein Zwischenergebnis und den nächsten Wert übergeben bekommt, und dann daraus das nächste Zwischenergebnis in Form eines neuen Objekts erzeugt.
+
+Im Gegensatz zu reduce geht collect davon aus, dass wir den Akkumulatorwert ändern. Um das zu erreichen, verwendet collect als Zwischenergebnis ein Objekt, das verändert werden kann.
+
+Die Verwendung von reduce ist in Java im Regelfall nicht idiomatisch. Stattdessen verwendet man in den allermeisten Fällen collect oder fertige Spezialmethode wie toList() oder sum().
+
+Die generische Version von collect bekommt drei Parameter:
+- einen Supplier für den Initialwert
+- einen BiConsumer<A,E>, der als „Ersatz“ für die Reduktionsfunktion benutzt wird; anstatt einen neuen Akkumulator-Wert zurückzugeben, wird das übergebene Akkumulator-Objekt mutiert
+- einen zweiten BiConsumer<A,A>, der – wie bei der allgemeinsten Version von reduce – für die parallele Verarbeitung benutzt wird, um den Inhalt des zweiten Akkumulators in den Inhalt des ersten zu kombinieren.
+
+### Kollektoren
+
+Drei Funktionen schreiben zu müssen (die Parameter für collect), die genau zusammenpassen müssen. Ist verhältnismäßig fehleranfällig. Daher gibt es die Möglichkeit, die notwendigen Funktionen in einem Objekt vom Typ Collector zusammenzufassen.
+
+Das Collector-Interface implementiert nicht drei, sondern fünf Methoden. Die Methode finisher gibt eine Function zurück, die verwendet wird um das Ergebnis in einem letzten Schritt zu transformieren. Das wird dann benötigt, wenn der Rückgabetyp von collect ein anderer Typ als der interne Akkumulator sein soll.
+
+#### Mitgelieferte Kollektoren
+
+Es gibt für sehr viele typische Anwendungen fertige Kollektoren, die man mithilfe von statischen Methoden der Klasse Collectors erzeugen kann.
+Wenn man beispielsweise einen Stream in ein Set überführen will, kann man dazu den von Collectors.toSet() erzeugten Kollektor nutzen.
+```java
+Set<Integer> set = Stream.of(1,2,3,4,5,6,7,8,9,10)
+    .map(e -> e + 1)
+    .collect(Collectors.toSet());
+```
+
+#### Extrem nützlich: Der groupingBy-Kollektor
+
+Es kommt häufiger vor, dass man als terminale Operation Daten gruppieren will, z. B. eine Kundenliste segmentiert nach Altersgruppen oder Postleitzahlenregion. Dafür kann man die terminale Operation groupingBy verweden.
