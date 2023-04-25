@@ -281,3 +281,160 @@ Es fehlt der Klasse eine convert-Methode, die den Inhalt der Box mithilfe einer 
 
 ##### Warum können wir das nicht mit einem zweiten Typparameter für die Klasse erledigen?
 -
+
+    
+## Woche 3
+
+### Aufgaben/Leitfragen Methoden-Referenzen
+
+#### Warum verwenden wir in dem Primzahlbeispiel einen Comparator und implementieren nicht einfach das Comparable-Interface
+-
+ 
+#### Geben Sie ein Beispiel für einen Lambda-Ausdruck an, der nur eine Methode aufruft, aber nicht direkt in eine Methodenreferenz umgeschrieben werden kann.
+-
+
+### Aufgaben/Leitfragen Funktionen Höherer Ordnung
+
+#### Gegeben seien die Funktion Function<Integer, Collection<Double>> wurzeln = n → List.of(-Math.sqrt(n), Math.sqrt(n)) und die Liste List.of(1,2,3). Was ist das Ergebnis, wenn sie wurzeln über die Liste mappen? Was erhalten Sie, wenn Sie stattdessen flatMap verwenden?
+-
+    
+#### Was berechnet der folgende Ausdruck?
+    ```java
+    reduce(
+    new ArrayList<Integer>(),
+    (acc, e) -> {
+        ArrayList<Integer> newAcc = new ArrayList<>(acc); // erstellt neue ArrayList als Kopie von acc
+        newAcc.add(e+1);
+        return newAcc;
+    },
+    List.of(1,2,3)
+    )
+    ```
+-
+    
+#### Schreiben Sie den Ausdruck aus der vorherigen Aufgabe so um, dass map statt reduce benutzt wird. Testen Sie Ihre Lösung, z. B. in der JShell.
+-
+    
+#### Implementieren Sie die filter-Funktion selber. Sie können die Funktion wahlweise direkt implementieren oder als Spezialfall von reduce.
+-
+
+#### Welchen großen Nachteil hat unsere Implementierung von map mithilfe von reduce gegenüber unserer direkten Implementierung?
+-
+
+### Aufgaben/Leitfragen Streams
+  
+#### Angenommen, es gäbe keine generate-Methode. Schreiben Sie eine statische Methode myGeneration, die einen Supplier bekommt und einen Stream zurückgibt, in dem die Werte sind, die generate erzeugen würde. Verwenden Sie iterate zur Implementierung.
+-
+    
+#### Gegeben sei folgende Klasse Lebensmittel:
+    ```java
+    public class Lebensmittel {
+    private final String name;
+    private final boolean abgelaufen = (Math.random() > 0.8);
+
+    public Lebensmittel(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean isAbgelaufen() {
+        return abgelaufen;
+    }
+
+    @Override
+    public String toString() {
+        return "Lebensmittel[name=" + name + ", abgelaufen=" + abgelaufen + ']';
+    }
+    }
+    ```
+    Schreiben Sie eine Methode inventur, die eine Liste von Lebensmitteln bekommt und eine Liste von Lebensmitteln, die nicht abgelaufen sind, zurückgibt.      Verwenden Sie dazu die Stream-API und verwenden Sie ausschließlich Methodenreferenzen, keine Lambda-Ausdrücke.
+-
+    
+#### Um den Umgang mit den Stream-Funktionen weiter zu üben, können Sie auch zusätzlich noch folgende Informationen über den Lebensmittelbestand berechnen und ausgeben:
+##### Geben Sie aus, ob es abgelaufene Lebensmittel gibt.
+-
+##### Wie viele abgelaufene Lebensmittel gibt es?
+-
+##### Geben Sie eine alphabetisch sortierte Liste der ersten fünf abgelaufenen Lebensmittel aus.
+-
+
+### Aufgaben/Leitfragen Reduktionen
+    
+#### Schreiben Sie eine Methode int evenSum(int n), die die geraden Zahlen zwischen 1 und n aufsummiert. Benutzen Sie dazu einen Stream.
+-
+   
+#### Berechnen die folgenden vier Ausdrücke dasselbe? Erstellen Sie ein Ranking danach, welchen der Ausdrücke Sie in der Praxis bevorzugen würden.
+    ```java
+    Stream.of(1,2,3).reduce(
+    new ArrayList<Integer>(),
+    (acc, e) -> {
+        ArrayList<Integer> newAcc = new ArrayList<>(acc);
+        newAcc.add(e + 1);
+        return newAcc;
+    },
+    (acc1, acc2) -> { // hängt zwei Listen aneinander (relevant für parallele Streams)
+        ArrayList<Integer> newAcc = new ArrayList<>(acc1);
+        newAcc.addAll(acc2);
+        return newAcc;
+    })
+    ```
+    ```java
+    Stream.of(1,2,3).collect(
+    () -> new ArrayList<Integer>(),
+    (acc, e) -> acc.add(e + 1),
+    (acc1, acc2) -> acc1.addAll(acc2))
+    ```
+    ```java
+    Stream.of(1,2,3).collect(
+    ArrayList::new,
+    (acc, e) -> acc.add(e + 1),
+    ArrayList::addAll)
+    ```
+    ```java
+    Stream.of(1,2,3).map(e -> e + 1).toList()
+    ```
+-
+    
+#### Wir wollen ein Programm schreiben, welches die Häufigkeit von Wörtern in einer Textdatei zählt. Das Gerüst ist schon fertig, es fehlt „nur“ noch das Zählen der Wörter. Wir wollen Groß-/Kleinschreibung nicht unterscheiden, Bar und baR sollen das gleiche Wort in der Zählung sein.
+```java
+public class WortHaufigkeit {
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Requires exactly one filename");
+            System.exit(-1);
+        }
+        Path file = Path.of(args[0]);
+
+        Map<String, Long> frequency = new HashMap<>();
+
+        try (Stream<String> words = new Scanner(file).tokens()) {
+
+            // Im Stream »words« stehen jetzt alle Wörter der Datei. (Den Code drumherum müssen Sie jetzt noch nicht vollständig verstehen.)
+
+            /* frequency =  mit Hilfe von Streams implementieren */
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(frequency);
+    }
+}
+```
+-
+    
+#### Die beiden folgenden Codeschnipsel berechnen dasselbe Ergebnis. Welchen finden Sie idiomatischer? Ist es sinnvoll, wenn Stream-Operationen den Zustand von Objekten „außerhalb“ verändern? Warum?
+    
+```java
+List<Integer> zahlen = List.of(1, 5, 3, 2, 5, 6, 4);
+List<Integer> geradeZahlen = new LinkedList<>();
+zahlen.stream().filter(n -> n % 2 == 0).forEach(geradeZahlen::add);
+```
+    
+```java
+List<Integer> zahlen = List.of(1, 5, 3, 2, 5, 6, 4);
+List<Integer> geradeZahlen = zahlen.stream().filter(n -> n % 2 == 0).toList();    
+```
+-
