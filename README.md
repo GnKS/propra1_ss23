@@ -1040,3 +1040,68 @@ Set<Integer> set = Stream.of(1,2,3,4,5,6,7,8,9,10)
 #### Extrem nützlich: Der groupingBy-Kollektor
 
 Es kommt häufiger vor, dass man als terminale Operation Daten gruppieren will, z. B. eine Kundenliste segmentiert nach Altersgruppen oder Postleitzahlenregion. Dafür kann man die terminale Operation groupingBy verweden.
+
+
+# Woche 4
+
+## Einführung ins Testing
+
+Durch Testing kann man verhindern, dass man nachdem man seinen Code ändert jedes mal von Hand testen muss ob er noch funktioniert.
+
+Warum ist testing wichtig:
+- Wartungskosten machen 80% der Kosten aus
+- Automatisierte tests helfen diese Koasten zu senken
+
+Was können Tests:
+- Regression verhindern
+- Ausführbare Spezifikation/Dokumantation/Codebeispiele geben
+- Sicherheitsnetz bei Änderungen sein
+
+Wichtig:
+- Tests müssen einfacher sein als der Produktivcode
+- Nach Möglichkeit linearer Code
+- Keine komplizierte Logik
+
+JUnit Tests:
+- Sind vollkommen normale Java Klassen
+- Liegen getrennt vom Produktivcode
+  - Produktivcode: src/main/java
+  - Testcode: src/test/java
+
+Junit Test Beispiel:
+```java
+import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class RomanNumbersTest {
+  
+  @Test
+  void test_I() {
+    RomanConverter converter = new RomanConverter();
+    assertThat(converter.translate(1)).isEqualTo("I");
+  }
+}
+```
+
+AAA Test:
+Arrange, Act, Assert:
+- Arrange: Kontext herstellen (Objekte erzeugen)
+- Act: Code ausführen
+- Assert: Ergebnis prüfen
+
+Ein Konzept pro Test testen!
+
+Regeln für gute Tests:
+- Verhalten prüfen 
+- Keine Implementierungs details prüfen
+- eigenen Code testen
+- Jede Logik, jeden Anwendungsfall testen
+
+FIRST:
+- Fast
+- Isolated and Independent
+- Repeatable
+- Self validating
+- Timely
+
+### Rückgaben Testen
