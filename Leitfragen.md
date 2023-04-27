@@ -442,4 +442,76 @@ List<Integer> geradeZahlen = zahlen.stream().filter(n -> n % 2 == 0).toList();
 ## Woche 4
 
 ### Aufgaben/Leitfragen Einführung ins Testing
+  
+#### Schreiben Sie die Assertions in der Klasse assertj.AssertionsAufgaben im junit-Projekt in den vorgegebenen Dateien (d. h. ersetzen Sie die assertThat(true).isFalse(); durch sinnvollen Code). Machen Sie sich damit vertraut, wie Sie die Tests mit Gradle auf der Konsole und in Ihrer IDE ausführen können.
+-
+  
+#### Überlegen Sie sich für jede FIRST-Regel: Warum ist diese Regel sinnvoll und notwendig?
+-
 
+#### Angenommen, Sie haben, um den Umgang mit Referenzen zu üben, eine einfach verkette Liste selbst implementiert. Es gibt eine Methode void remove(T needle) zum Löschen des ersten Elements, das gleich needle ist. Welche (Rand-)Fälle sollten Ihre Tests abdecken?
+-
+  
+#### Schauen Sie sich an, welchen Typ die folgenden Methoden zurückgeben und welche Methoden AssertJ auf den zurückgegebenen Objekten anbietet. Sie können dazu die IDE verwenden und sich die Vorschläge anschauen.
+```java
+?? number = assertThat(4);
+?? string = assertThat("foo");
+?? bool = assertThat(false);
+?? ldt = assertThat(LocalDate.now());
+?? collection = assertThat(List.of(1,2,3));
+```
+-
+  
+#### Wir wollen die Methode lottoZahlenZiehen testen.
+```java
+public static List<Integer> lottoZahlenZiehen() {
+  ArrayList<Integer> auswahl =
+      IntStream.rangeClosed(1, 49)
+          .boxed()
+          .collect(Collectors.toCollection(ArrayList::new));
+  Collections.shuffle(auswahl);
+  return auswahl.stream()
+      .limit(6)
+      .sorted()
+      .collect(Collectors.toList());
+}
+```
+Schreiben Sie AssertJ-Assertions, die folgendes prüfen:
+
+1. Die Anzahl der Zahlen stimmt
+
+2. Jede Zahl kommt nur einmal vor
+
+3. Alle Zahlen liegen zwischen 1 und 49
+
+Schreiben Sie ausschließlich Assertions, keine Schleifen, etc. Den Code und einen vorbereiteten Test finden Sie im Ordner junit (Unterordner lotto); importieren Sie das Gradle-Projekt in Ihre IDE und nutzen Sie die Suchfunktion der IDE, um die für die Aufgaben relevanten Codestellen schnell zu finden.
+-
+  
+#### Schauen wir uns einmal folgende Methode an, die eine Zufallszahl zwischen 1 und n zurückgibt.
+```java
+public int w(int n) {
+  return (int)(Math.random() * n + 1);
+}
+```
+Bei mehreren Aufrufen mit demselben Parameter gibt die Funktion unterschiedliche Werte zurück, sie kann also, nach unserer Behauptung, nicht pure sein. Aber wo ist der Seiteneffekt?
+-
+  
+#### Lassen Sie die Tests im junit-Ordner mit ./gradlew check von der Kommandozeile aus laufen und schauen Sie sich den generierten Report an (build/reports/tests/test/index.html). Schalten Sie einen Test aus, ändern Sie den DisplayName, bringen Sie einige Tests dazu fehlzuschlagen, und schauen Sie sich an, wie sich die einzelnen Änderungen auf den Report auswirken.
+-
+  
+#### Ändern Sie das Attribut counter in der CounterTest-Klasse so, dass es statisch ist, und lassen Sie die Tests laufen. Welcher Test schlägt fehl und warum gerade dieser?
+-
+  
+#### Bringen Sie den Test in DivisionTest durch Veränderung von Division (also nicht durch Veränderung des Tests!) zum Fehlschlag.
+-
+  
+### Leitfragen/Aufgaben Testgetriebene Entwicklung, Part 1
+  
+#### Beschreiben Sie in drei Sätzen die drei Schritte bei TDD.
+-
+  
+#### In der Programmierung haben Sie schon ein paar Regeln für „guten“ Code kennengelernt. Welche fallen Ihnen noch ein?
+-
+  
+#### Implementieren Sie testgetrieben eine Funktion, die bestimmt, ob ein gegebenes Jahr ein Schaltjahr ist. Achten Sie darauf, den Code im Refactoring so umzustrukturieren, dass er möglichst gut lesbar ist.
+-
