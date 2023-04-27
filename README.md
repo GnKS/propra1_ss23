@@ -1105,3 +1105,78 @@ FIRST:
 - Timely
 
 ### Rückgaben Testen
+
+`Purefunctions` sind Funktionen deren Resultate ausschließlich von den eingabe Parametern abhängen. Die Funktionen haben keine Seiteneffekte.
+Seiteneffekte sind z.B. die Änderung des Zustands eines Objekts, Ausgabe auf der Konsole, Abschicken einer Mail.
+Logische Konsequenz ist, dass eine pure function, wenn sie dieselben Eingaben bekommt, auch immer dieselbe Ausgabe produzieren muss.
+
+Assertion mit JUnit:
+```java
+@Test
+void test_sin_pi_halbe() {
+    double sin = Sinus.von(Math.PI/2);
+    assertEquals(1.0, sin, 1e-5);
+}
+```
+Assertion mit AssertJ:
+```java
+@Test
+void test_sin_pi_halbe_assertj(){
+    double sin = Sinus.von(Math.PI/2);
+    assertThat(sin).isCloseTo(1.0, offset(1e-5));
+}
+```
+Man sieht bei der AssertJ methode schneller was getestet wird und was das erwartete Ergebnis ist.
+
+### Testen mit Zustand
+
+Testen dieser Methode:
+```java
+public class Counter {
+    private int count;
+
+    public void tick() {
+        count++;
+    }
+
+    public int getCount() {
+        return count;
+    }
+}
+```
+kann so aussehen:
+```java
+public class CounterTest {
+
+    private Counter counter = new Counter();
+
+    @Test
+    void testSingleTick() {
+        counter.tick();
+        assertThat(counter.getCount()).isEqualTo(1);
+    }
+}
+```
+weiterer Test:
+```java
+@Test
+void testTwoTicks() {
+    counter.tick();
+    counter.tick();
+    assertThat(counter.getCount()).isEqualTo(2);
+}
+```
+Beide Tests funktionieren hintereinander da JUnit jeden Test mit einer eigenen Instanz der Klasse ausführt.
+Mit `@TestInstance(PER_CLASS)` werden alle Tests in derserlben Instanz der Testklasse ausgeführt. 
+Ebenfalls kann man Counter static machen auch dann schlägt einer der Tests fehl.
+Welcher Test fehlschlägt hängt von der ausführungs Reihenfolge ab. (Diese ist deterministisch aber nicht einfach vorhersehbar.)
+`@TestMethodOrder`-Annotation gibt einem Kontrolle über die Reihenfolge in der Tests ausgeführt werden.
+In den meisten Fällen ist es besser von einer Test-Reihenfolge abzusehen.
+
+### Testszenarien auswählen
+
+Die große Kunst beim Example-Based Testing ist die Auswahl der Testfälle. Wir wollen nicht zu viele Tests haben, aber wir wollen das gesamte relevante Verhalten testen.
+Beim Testen Grenzfälle betrachten.
+Für Listen, Mengen, Maps an leere Listen, Mengen, Maps denken.
+Bei Zahlen die 0 anschauen, positive und negative Werte benutzen und auch an die Grenzen des Datentyps gehen, zum Beispiel Fälle, in denen Integer.MAX_VALUE über- bzw. Integer.MIN_VALUE unterschritten wird. 
+Für Referenztypen sollten wir auch immer mal null in Betracht ziehen.
