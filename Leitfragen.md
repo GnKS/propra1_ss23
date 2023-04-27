@@ -438,3 +438,8 @@ List<Integer> zahlen = List.of(1, 5, 3, 2, 5, 6, 4);
 List<Integer> geradeZahlen = zahlen.stream().filter(n -> n % 2 == 0).toList();    
 ```
 -
+
+## Woche 4
+
+### Aufgaben/Leitfragen Einführung ins Testing
+
