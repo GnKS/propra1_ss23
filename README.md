@@ -1180,3 +1180,40 @@ Beim Testen Grenzfälle betrachten.
 Für Listen, Mengen, Maps an leere Listen, Mengen, Maps denken.
 Bei Zahlen die 0 anschauen, positive und negative Werte benutzen und auch an die Grenzen des Datentyps gehen, zum Beispiel Fälle, in denen Integer.MAX_VALUE über- bzw. Integer.MIN_VALUE unterschritten wird. 
 Für Referenztypen sollten wir auch immer mal null in Betracht ziehen.
+
+## Testgetriebene Entwicklung, Part 1
+
+Bei TDD (Test Driven Development) schreibt man Tests bevor Produktivcode geschrieben wird (Tests first). (Optimaler Fall für Timely in FIRST)
+Eigenschaften von TDD Code:
+- Wir haben immer einen ersten Client für unseren Code (also anderen Code, der unseren Code aufruft). Der Test kann benutzt werden um herauszufinden, was der Code machen soll.
+- Der Code ist garantiert testbar, denn wir haben den Test ja schon geschrieben.
+- Wenn die Spielregeln eingehalten werden, ist der Code auch weitestgehend getestet.
+
+Tests vor dem Code zu schreiben ist in sofern keine schlechte Idee, da man so sicher geht, dass man auch verstanden hat was für Code man schreiben will, denn dies ergibt sich zwangsläufig wenn man die Tests zuerst schreibt.
+
+### Der TDD-Entwicklungszyklus
+
+Drei Phasen des TDD:
+- Es wird ein fehlschlagender Test geschrieben. Da fehlschlagende Tests in den meisten Werkzeugen rot dargestellt werden, wird diese erste Phase auch als RED bezeichnet.
+- Es wird (minimaler) Produktivcode geschrieben, sodass der Test durchläuft. (GREEN)
+- Die interne Qualität des Codes wird verbessert. (REFACTOR)
+
+
+### Fehlschalgender Test
+Fehlschlagende Tests sind wichtig. Wenn ein Test der fehlschlagen sollte durchläuft stellt sich die Frage ob der Test überhaupt funktioniert da man vielleicht `@Test` vergessen hat oder einen Test geschrieben hat der nichts testet.
+
+Ein Sicherheitstest der nicht im Sinn des TDD geschrieben wird kann überprüft werden indem man den Produktivcode ändert, sodass der Test fehlschlagen sollte.
+
+### Minimaler Code
+Dann schreibt man Code bis alle Tests funktionieren (grün sind). Alle Mittel sind recht für diesen Schritt (Code klauen, Code generieren lassen, hardcoded Werte zurück geben, ...).
+Natürlich kann man auch sofort richtigen Code schreiben wenn dieser einfach und offensichtlich ist.
+
+Code schreiben um Tests zu erfüllen sollte 30 Sekunden bis 2 Minuten dauern.
+Wenn keine Lösung in der Zeit gefunden wird, macht es evtl. Sinn den Test zu vereinfachen.
+
+### Refaktorisierung
+Nach dem die Tests laufen kann der Code überarbeitet (verbessert) werden. Die interne Struktur des Codes wird geändert oder verbessert das Verhalten nach außen bleibt unverändert.
+Im EVA-Prinzip (Eingabe, Verarbeitung, Ausgabe) würde man Ein- und Ausgabe festhalten und an der Verarbeitung arbeiten.
+Daher ist es enorm wichtig Refactoring erst nach durchlaufen der Tests zu machen da man so sicher geht das man nicht ausversehen die Funktion des Codes ändert.
+
+Refacotring ist wichtig für Übersichtlichkeit, Wartbarkeit, Verständlichkeit.
