@@ -1300,3 +1300,12 @@ Zusammengehörige Informationen sind also in einem Objekt zusammengefasst.
 ### SLAP
 
 Single-Layer-of-Abstraction-Prinzip (SLAP) ist eine Hilfestellung, die beim Schreiben bzw. Zerlegen von Methoden helfen kann.
+
+## Duplicated Code / DRY
+
+Duplicated Code steht im Zusammenhang mit DRY (Don't repear yourself).
+
+Bei DRY geht es nicht nur um copy paste code sondern auch um die wiederholende einsetzung der selben Logik.
+Wenn man am Code eine Sach anpassen muss und deswegen mehrere Stellen Code verändern muss ist DRY vermutlich nicht eingehalten worden.
+Nicht jeder duplizierte Code ist ein DRY fehler. Es kann gleicher Code mit verschiedenen Logiken existieren.
+Man kann im späteren Verlauf eines Programms DRY regeln aus Performance gründen verletzen.
