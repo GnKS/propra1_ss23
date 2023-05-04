@@ -1258,3 +1258,22 @@ Es erleichtert die Lesbarkeit, wenn überall im Code dieselben Konventionen gelt
 - Für Klassen werden typischerweise Nomen und für Methoden werden meistens Verben benutzt.
 - Interfaces durch ein vorangestelltes I kennzeichnen.
 
+## Kommentare
+
+Kommentare sind ein wertvolles Medium, um Informationen zwischen Entwickler:innen auszutauschen. Gleichzeitig kann ein Kommentar aber auch ein Smell sein, der auf Probleme im Quellcode hinweisen kann.
+
+Wenn Sie einen Kommentar der Art „der folgende Code tut xy“ sehen, packen Sie den folgenden Code besser in eine Methode mit dem Namen „xy“.
+
+## Methoden richtrig schreiben
+
+SLAP (Single Layer of Abstraction Prinzip)
+
+### Long Method
+
+Jede Methode sollte nach Möglichkeit nur eine einzige Verantwortlichkeit haben.
+Dadurch einfacher diese Methode zu verstehen.
+
+Methoden sollen möglichst klein sein, allerdings sollte man natürlich Code nicht beliebig zerschneiden, sondern sinnvolle Einheiten bilden.
+
+### Parameter in den Griff bekommen
+
