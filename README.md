@@ -1277,3 +1277,26 @@ Methoden sollen möglichst klein sein, allerdings sollte man natürlich Code nic
 
 ### Parameter in den Griff bekommen
 
+Lange Parameterlisten sind für uns nur schwer handhabbar. Das gilt ganz besonders, wenn die Parameter den gleichen Typ haben.
+
+Beispiel die Entfernung zwischen zwei Punkten im dreidimensionalen Raum bestimmen:
+
+```java
+public int entfernung(int k1, int k2, int k3, int k4, int k5, int k6) {
+    /* ... */
+}
+```
+Welcher Punkt welcher ist ist schwer zu erkennen.
+
+Besser:
+```java
+public int entfernung(Punkt p1, Punkt p2) {
+    /* ... */
+}
+```
+
+Zusammengehörige Informationen sind also in einem Objekt zusammengefasst.
+
+### SLAP
+
+Single-Layer-of-Abstraction-Prinzip (SLAP) ist eine Hilfestellung, die beim Schreiben bzw. Zerlegen von Methoden helfen kann.
