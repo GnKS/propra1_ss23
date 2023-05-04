@@ -515,3 +515,33 @@ Bei mehreren Aufrufen mit demselben Parameter gibt die Funktion unterschiedliche
   
 #### Implementieren Sie testgetrieben eine Funktion, die bestimmt, ob ein gegebenes Jahr ein Schaltjahr ist. Achten Sie darauf, den Code im Refactoring so umzustrukturieren, dass er möglichst gut lesbar ist.
 -
+
+## Woche 5
+
+### Aufgaben/Leitfragen Konventionen/Bennenung
+
+#### Angenommen, Sie wollen eine Todo-Listen-Anwendungen schreiben. An einer Stelle soll es ein privates Attribut vom Typ List<Task> geben, in dem alle Aufgaben der Todo-Liste gespeichert sind. Schlagen Sie drei unpassende Namen für dieses Attribut vor (verletzen Sie also ausnahmsweise mal vorsätzlich die oben genannten Regeln). Versuchen Sie Namen zu finden, die aus unterschiedlichen Gründen unpassend sind.
+-
+    
+#### Bei öffentlichen Schnittstellen können in Java manche Namen bedenkenlos geändert werden (also ohne, dass Änderungen am aufrufenden Code notwendig sind). Denken Sie z. B. konkret an folgendes Interface:
+```java
+ public interface Stack {
+    void push(int a);
+    int pop();
+}   
+```
+Welche Namen können Sie im Interface ändern, ohne dass Sie Klassen, die das Interface implementieren, ändern müssen?
+- pop
+- push
+- a
+- stack
+
+- ohne die Klassen die das Interface implementieren zu ändern kann man hier nur den Variablennamen `a` ändern.
+    
+### Leitfragen/Aufgaben DRY/Code Smells
+    
+#### Warum ist die Einhaltung des DRY-Prinzips wichtig für die Wartbarkeit von Software? Zu welchen Problemen kann eine Verletzung des Prinzips bei der Weiterentwicklung der Software führen?
+    
+#### Warum ist der identische Code der Funktionen ​validate_age und validate_quantity keine Verletzung des DRY-Prinzips?
+    
+#### „Wir sollten Code Smells aus unserem Code entfernen, weil sie auf ein Problem im Code hindeuten.“ Stimmen Sie der Aussage zu? Wann ist es wichtig, Code Smells zu entfernen?
