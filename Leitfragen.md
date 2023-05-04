@@ -542,6 +542,17 @@ Welche Namen können Sie im Interface ändern, ohne dass Sie Klassen, die das In
     
 #### Warum ist die Einhaltung des DRY-Prinzips wichtig für die Wartbarkeit von Software? Zu welchen Problemen kann eine Verletzung des Prinzips bei der Weiterentwicklung der Software führen?
     
-#### Warum ist der identische Code der Funktionen ​validate_age und validate_quantity keine Verletzung des DRY-Prinzips?
+#### Warum ist der identische Code der Funktionen validate_age und validate_quantity keine Verletzung des DRY-Prinzips?
     
 #### „Wir sollten Code Smells aus unserem Code entfernen, weil sie auf ein Problem im Code hindeuten.“ Stimmen Sie der Aussage zu? Wann ist es wichtig, Code Smells zu entfernen?
+
+### Aufgaben zu SLAP
+- Im Code-Repo zu diesem Wochenblatt finden Sie im Ordner cosinus ein Gradle-Projekt. Der Code stammt aus einem Lösungsvorschlag zu einem Übungsblatt der Vorlesung Programmierung.
+
+- Schauen Sie sich den Code mit Ihrem heutigen Wissen an. Welche Code Smells finden Sie?
+
+- Refactorn Sie den Code. Lassen Sie nach jeder Änderung die vorhandenen Tests laufen.
+
+- Finden Sie heraus, welche Tastenkombination es in Ihrer IDE für das Refactoring „Extract Method“ gibt, und üben Sie, dieses automatische Refactoring anzuwenden.
+    
+- Prüfen Sie am Ende, ob noch alle Namen sinnvoll sind und benennen Sie ggf. Variablen und Methoden mithilfe der IDE um.
