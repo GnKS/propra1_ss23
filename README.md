@@ -1217,3 +1217,44 @@ Im EVA-Prinzip (Eingabe, Verarbeitung, Ausgabe) würde man Ein- und Ausgabe fest
 Daher ist es enorm wichtig Refactoring erst nach durchlaufen der Tests zu machen da man so sicher geht das man nicht ausversehen die Funktion des Codes ändert.
 
 Refacotring ist wichtig für Übersichtlichkeit, Wartbarkeit, Verständlichkeit.
+
+
+# Woche 5
+
+## Refactoring
+
+Stellen im Code, die auf Probleme bezüglich der Wartbarkeit einer Anwendung hindeuten nennt man `Code Smells`.
+
+Code Smell Referenzen zum nachschlagen https://github.com/hhu-propra1-ss23/code_woche05/blob/main/smellstorefactorings.pdf
+
+Ziel des Refactoring/Beseitigen von Code Smells ist, dass der Code für Menschen gut verständlich ist und in Zukunft einfacher an neue Anforderungen angepasst werden kann.
+
+### Mehrere Verantwortlichkeiten / Aufgaben
+
+Methoden sollten sich immer nur mit einer Aufgabe befassen. Wenn eine Methdoe mehr als eine Aufgabe übernimmt ist es eine gute Idee darüber nachzudenken ob man funktionalitäten in eine weitere Methode auslagert.
+
+## Mysterious Name / Namen in Programmen
+
+Ändern eines ungeschickt gewählten Namens ist üblicherweise schnell mithilfe der IDE erledigt.
+- Namen von Methoden und Variablen dürfen nicht lügen
+- Namen sollten spezifisch sein
+- Namen sollten aussagekräftig sein
+- Namen sollten minimalen Kontext haben, gerade soviel, wie notwendig um den Code zu verstehen.
+
+Gute Benennung ist einer der besten Wege, um die Wartbarkeit von Software zu verbessern. Denken Sie immer darüber nach, wie Sie die Benennung eines Konzepts (sei es ein Attribut, eine Methode, eine Klasse, ...) verbessern können.
+
+Wenn Sie keinen guten Namen finden können, sollten Sie in Betracht ziehen, dass die gewählte Abstraktion nicht gut ist. Vielleicht versuchen Sie gerade etwas zu abstrahieren, was kein echtes eigenes Konzept ist.
+
+Wenn es Ihnen sehr schwer fällt, einen passenden Namen zu wählen, kann das auf mehr als ein Konzept hindeuten.
+
+## Konventionen in Java
+
+Es ist wichtig die üblichen Konventionen einzuhalten. 
+Es erleichtert die Lesbarkeit, wenn überall im Code dieselben Konventionen gelten.
+
+- In Java werden für Attribute, Methoden und Klassen das sogenannte CamelCase verwendet.
+- Variablen werden dabei zuerst klein geschrieben, Methodennamen groß.
+- Konstanten werden komplett groß geschrieben.
+- Für Klassen werden typischerweise Nomen und für Methoden werden meistens Verben benutzt.
+- Interfaces durch ein vorangestelltes I kennzeichnen.
+
