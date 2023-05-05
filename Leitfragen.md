@@ -299,7 +299,7 @@ Es fehlt der Klasse eine convert-Methode, die den Inhalt der Box mithilfe einer 
 -
     
 #### Was berechnet der folgende Ausdruck?
-    ```java
+```java
     reduce(
     new ArrayList<Integer>(),
     (acc, e) -> {
@@ -309,7 +309,7 @@ Es fehlt der Klasse eine convert-Methode, die den Inhalt der Box mithilfe einer 
     },
     List.of(1,2,3)
     )
-    ```
+```
 -
     
 #### Schreiben Sie den Ausdruck aus der vorherigen Aufgabe so um, dass map statt reduce benutzt wird. Testen Sie Ihre Lösung, z. B. in der JShell.
