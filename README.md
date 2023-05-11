@@ -1309,3 +1309,111 @@ Bei DRY geht es nicht nur um copy paste code sondern auch um die wiederholende e
 Wenn man am Code eine Sach anpassen muss und deswegen mehrere Stellen Code verändern muss ist DRY vermutlich nicht eingehalten worden.
 Nicht jeder duplizierte Code ist ein DRY fehler. Es kann gleicher Code mit verschiedenen Logiken existieren.
 Man kann im späteren Verlauf eines Programms DRY regeln aus Performance gründen verletzen.
+
+
+
+# Woche 6
+
+## Debugging in der IDE
+
+Debugger ist eine gute sache, benutzen.
+
+## Systematische Fehlersuche
+
+Was ist ein Bug?
+Ein bug ist ein Fehler in einem Programm oder System das zu unerwartetem verhalten führt.
+
+Fehlerarten:
+- Syntax und Compilerfehler, Fehler beim starten oder bauen
+- Logische Fehler
+- Probleme mit Ressourcen
+- Integrationsfehler
+
+Fehlermeldung lesen.
+
+Fehlerbehebung:
+- Fehler reproduzieren
+- Diagnose der Fehlerursache
+- Reparieren
+- Reflektieren
+
+Beobachtung:
+- Was sind Umstände unter denen der Fehler auftritt? (Kontext)
+- Welches Ergebnis wird erwartet? (soll zustand)
+- Welches Ergebnis bekommt man? (ist zustand)
+- Kritisch eigene Annahme hinterfragen, Dokumentation lesen
+- Fehlermeldung lesen
+
+Scientific Debugging:
+- Was wissen wir über das Problem? Was könnte eine mögliche Ursache sein? Aufstellen einer Hypothese
+- Wie könnte ein Experiment aussehen, das die Hypothese wiederlegen kann?
+- Wenn das Experiment die Hypothese widerlegt wird eine neue Hypothese gesucht
+- Nach genug Experimenten sind wir sicher, dass wir die Ursache gefunden haben
+
+Reparieren:
+- Mit einem frischen System anfangen (ggf. geänderte Dateien kopieren)
+- Demonstrieren, da ist (durch test)
+- Die Fehlerursache beheben
+- Demonstrieren, dass der Fehler behoben wurde
+
+Code ist dann repariert wenn der Fehler beseitigt ist, nicht wenn die Symptome nicht mehr auftreten
+
+Reflektion:
+- Wie ist es zu dem Problem gekommen?
+- Wie verhindert man solche Fehler in Zukunft?
+
+
+## Minor Changes: Sinnvolle Commits
+
+Ein wichtiges Element der automatischen Versionsverwaltung (beispielsweise mit Git) ist die Commit-Historie. Man kann damit nachvollziehen, wer wann welche Änderungen am Code gemacht hat (also z. B. einen Bug behoben hat).
+
+`git` log zeigt die Änderungshistorie eines Repositories an.
+`git` blame zeigt wer eine Zeile in einer Datei zuletzt geändert hat.
+
+### Log, Blame, Diff
+
+- `git log` --oneline Übersicht über alle Commits in einem Repository auf dem aktuellen Entwicklungszweig
+- `git log --oneline --abbrev-commit --all --graph --decorate` Übersicht über alle Commits in einem Repository, inkl. aller Verzweigungen
+- `git show 5581d0d4` Anzeige der Informationen zu einem einzelnen Commit, inkl. gemachte Änderungen; entspricht der Anzeige des Commits auf Github
+- `git blame pom.xml` Anzeige, wer welche Zeilen der Datei pom.xml zuletzt geändert hat; entspricht der Blame-Ansicht auf Github
+- `git diff` Anzeige aller Änderungen seit dem letzten Commit
+- `git diff ecc54380 4fb4322c` Anzeige aller Änderungen zwischen den beiden angegebenen Commits
+
+### Sinnvolle Commit-Messages
+
+Das Schreiben von Commit-Messages ist nicht immer einfach.
+Hilfreich für Fehlersuche und Personen die das Programm verstehen wollen/müssen
+
+Eine Commit-Nachricht besteht oft nicht nur aus einer einelnen Zeile, sondern ist mehrzeilig. Mehrzeilige Nachrichten kann man eingeben, indem man git commit (ohne -m) verwendet.
+Dann öffnet sich der in git eingestellte Standard-Editor mit einem Dokument, in dem man die Commit-Nachricht schreiben kann.
+
+Die erste Zeile einer Commit-Nachricht ist ein Betreff, der üblicherweise nicht länger als 50 Zeichen ist 
+Die Betreffzeile sollte immer in einem ähnlichen Stil verfasst sein, denn so können die relevanten Informationen schneller gefunden werden
+Ein typischer Stil bei englischen Commit-Nachrichten ist z. B. die Verwendung des Imperativs wie `Add support for Markdown files`
+Manche Entwicklungsteams stellen der Betreffzeile auch einen Präfix voran, der den Typ der Änderung beschreibt z.B. `FIX` oder `FEATURE`
+
+Nach der Betreffzeile folgt eine Leerzeile und dann ggf. eine ausführlichere Beschreibung des Commits. Darin sollten folgende Fragen geklärt werden:
+- Warum wurde die Änderung vorgenommen?
+- Was wurde geändert? (sofern das nicht aus den Codeänderungen offensichtlich wird)
+- Wirkt sich der Commit auf andere Programmteile aus?
+- ggf. Verlinkung zu relevanten Issues, Änderungsvorschlägen oder Diskussionen
+
+### Inhalt eines Commits
+
+Ein Commit sollte sich um eine zusammenhängende Änderung drehen.
+Wenn man verschiedene Sachen ändert sollte man mehrere Commits machen.
+Somit ist es auch einfacher Commits rückgängig zu machen.
+
+### TDD und Commits
+
+In der testgetriebenen Entwicklung gibt es zwei gute Stellen, an denen sich ein Commit anbietet:
+- Nach der Green-Phase sind wir an einem Punkt, wo wir unsere Arbeit commiten können, denn wir haben gerade ein neues Verhalten hinzugefügt. Dieses Verhalten kann im Grunde nicht zu kompliziert sein, denn wir haben ja nur einen einzigen Test hinzugefügt.
+- Nach einem Refactoring Schritt ist ebenfalls ein Punkt, wo sich ein Commit anbietet. Auch hier haben wir eine relativ überschaubare (und im Falle von Refactorings sogar in der Regel reversible) Änderung gemacht.
+
+### .gitignore
+
+Konfigurationsdateien in unseren Projekten haben, die sensible Informationen (z. B. Passwörter) beinhalten, die Sie nicht in ein Repository einchecken sollten (selbst wenn es privat ist).
+
+Neben der lokalen gitignore in einem Repository, kann auch eine globale gitignore-Datei angelegt werden.
+Hier werden Dateien eingetragen, die das eigene Betriebssystem automatisch in Ordner hinterlegt. Dadurch wird verhindert, dass diese Dateien Teil eines Repositories werden, in dem es noch keine (vollständige) gitignore gibt. Die globale gitignore liegt standardmäßig unter ~/.config/git/ignore bzw. unter Windows unter %USERPROFILE%\git\ignore.
+
