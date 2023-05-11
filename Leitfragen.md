@@ -556,3 +556,74 @@ Welche Namen können Sie im Interface ändern, ohne dass Sie Klassen, die das In
 - Finden Sie heraus, welche Tastenkombination es in Ihrer IDE für das Refactoring „Extract Method“ gibt, und üben Sie, dieses automatische Refactoring anzuwenden.
     
 - Prüfen Sie am Ende, ob noch alle Namen sinnvoll sind und benennen Sie ggf. Variablen und Methoden mithilfe der IDE um.
+
+    
+## Woche 6
+
+### Aufgaben/Leitfragen Debugging in der IDE
+
+#### Im Ordner debugger im Code-Repo zu dieser Woche finden Sie das Projekt aus dem Video. Finden Sie den letzten Fehler mithilfe des Debuggers und beheben Sie das Problem.
+-
+    
+#### Fügen Sie in der main-Methode von WordAnalyzerTester den Aufruf test(null); hinzu und lassen Sie das Programm laufen. Setzen Sie dann einen Exception-Breakpoint und starten Sie das Programm im Debugger-Modus.
+-
+    
+### Aufgaben/Leitfragen Systematische Fehlersuche
+
+#### Die Methode binarySearch aus der Klasse Collections sucht einen Wert in einer Kollektion. Sie gibt den Index des Wertes in der Kollektion zurück. Ein negativer Wert zeigt an, dass der Wert nicht vorhanden ist. Was ist der Fehler in folgendem Code? Reparieren Sie den Fehler.
+```java
+List<Integer> results = List.of(13,7,2,19,27,22,55,33,8);
+ System.out.println(Collections.binarySearch(results,27)); // => 4 (stimmt)
+ System.out.println(Collections.binarySearch(results,55)); // => 6 (stimmt)
+ System.out.println(Collections.binarySearch(results,7)); // => 1 (stimmt)
+ System.out.println(Collections.binarySearch(results,22)); // => -5 (falsch)
+ System.out.println(Collections.binarySearch(results,2)); // => -1 (falsch)
+ System.out.println(Collections.binarySearch(results,13)); // => -4 (falsch)
+```
+#### Im Ordner debugreduce finden Sie ein Programm, das eine Liste von Personendaten einliest und eine Häufigkeitsverteilung über die Toplevel-Domänen (TLD) der Mailadressen erstellt (also .de, .com usw.). Das Programm ist leider fehlerhaft und wir wollen nun das Problem beheben.
+-
+    
+##### Reproduzieren Sie den Fehler, indem Sie das Programm laufen lassen. Sie stellen fest, dass es abstürzt und eine ArrayIndexOutOfBoundsExcption produziert.
+-
+    
+##### Schreiben Sie einen automatisierten Test, der den Fehler reproduziert. Kopieren Sie dazu die Datei entries.csv und benennen Sie diese zum Beispiel in testentries.csv um. Verwenden Sie die Kopie für den Test. Wie sollte die Assertion lauten?
+-
+
+##### Minimieren Sie die Eingabedatei für den Test, so dass der Absturz immer noch auftitt. Verwenden Sie dazu eine „binäre Suche“. Entfernen Sie die Hälfte der Eingabedaten. Stürzt das Programm ab? Wenn nein, dann war wahrscheinlich in den gelöschten Daten die Fehlerursache. Wenn ja, dann gibt es eine Fehlerursache in den noch vorhandenen Daten. Fahren Sie solange fort, bis die Datei eine minimale Größe hat.
+-
+##### Warum nicht mit dem Debugger arbeiten?
+-
+    
+##### Warum ist es wichtig, eine minimale Eingabe zu erzeugen?
+-
+    
+##### Finden Sie den Defekt im Programm, wir wollen nicht die Schuld am Absturz an die Person weiterreichen, die die Eingabedatei produziert hat, sondern unser Programm robuster gestalten. Sie können die Ursache hier ziemlich sicher mithilfe der Fehlermeldung finden, Sie können aber auch mit dem Debugger arbeiten.
+-
+    
+##### Nachdem Sie die Ursache gefunden haben, beheben Sie das Problem und überprüfen Sie mithilfe des Tests, dass das Problem behoben wurde. Es gibt verschiedene Arten, das Problem sinnvoll zu beheben, treffen Sie eine Entscheidung.
+-
+    
+##### Worauf sollten wir achten, damit ein solches Problem in Zukunft vermieden werden kann?
+-
+    
+##### Es gibt noch einen zweiten Fehler. Beheben Sie auch diesen Fehler.
+-
+   
+    
+### Aufgaben/Leitfragen Minor Changes: Sinnvolle Commits
+    
+#### Schauen Sie sich diese Klasse auf GitHub an. Wer hat die Zeile catch (NullPointerException e) geschrieben und warum? Hilft Ihnen die Commit-Nachricht weiter? (Sie müssen die Begründung für die Codezeile nicht nachvollziehen können, Sie sollen aber einmal den Umgang mit der Git-History (auf der Konsole oder auf GitHub) üben und sehen, dass verständliche Commit-Nachrichten hilfreich sind.)
+
+#### Nehmen Sie sich irgendein Repository von Ihnen und verändern Sie irgendentwas an einer bereits versionierten Datei.
+
+1. Lassen Sie sich anzeigen, welche Änderungen es seit dem letzten Commit gab. (git diff)
+
+2. Committen Sie die Änderungen. Vergeben Sie dabei eine Commit-Nachricht, die aus mehr als einer einzelnen Zeile besteht. (git commit)
+    
+#### Fassen Sie zusammen: Warum sind Commits mit zusammenhängenden Code-Änderungen und einer guten Commit-Nachricht sinnvoll?
+-
+    
+#### Sofern Sie die erste Übung nicht besucht haben: Arbeiten Sie die Aufgaben zur Gitignore durch.
+
+#### Lassen Sie sich eine gitignore-Datei für Ihr Betriebssystem generieren. Richten Sie diese Datei als globale gitignore ein. Testen Sie mit einem Repository von Ihnen, dass die globale gitignore-Datei funktioniert.
+    
