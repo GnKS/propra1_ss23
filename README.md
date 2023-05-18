@@ -1417,3 +1417,76 @@ Konfigurationsdateien in unseren Projekten haben, die sensible Informationen (z.
 Neben der lokalen gitignore in einem Repository, kann auch eine globale gitignore-Datei angelegt werden.
 Hier werden Dateien eingetragen, die das eigene Betriebssystem automatisch in Ordner hinterlegt. Dadurch wird verhindert, dass diese Dateien Teil eines Repositories werden, in dem es noch keine (vollständige) gitignore gibt. Die globale gitignore liegt standardmäßig unter ~/.config/git/ignore bzw. unter Windows unter %USERPROFILE%\git\ignore.
 
+
+# Woche 7
+
+## Qualität von Software
+
+Software Qualitätspunkte nach ISO 25010
+- Wartbarkeit
+- Funktionale Angemessenheit
+- Portabilität
+- Performance / Effizienz
+- Kompatibilität
+- Sicherheit
+- Nutzbarkeit
+- Zuverlässigkeit
+
+Diese Ziele stehen unter umständen im Konflikt zueinander
+
+Wartbarkeit:
+Wartbarkeit erzeugt knapp 70% der kosten für ein Projekt. (Unterschiedlich von Projekt zu Projekt)
+Wartung hält eine Software nach der Produktion am laufen.
+
+- Wartungskosten dominieren in vielen Fällen die Gesamtkosten
+- Wartbarkeit wird reduziert durch
+  - Ungeschickte Strukturierung
+  - Kopplung zwischen den Strukturelementen
+
+Wartbarkeit bedeutet im grunde, dass man Software so schreibt, dass man sie leicht ändern kann.
+
+
+## Die richtigen Bausteine bilden
+
+Wesentlich für die Entwicklung von wartbarer Software ist die Zerlegung oder Dekomposition.
+Dekomposition oder Modularisierung versucht das System in kleinere Bestandteile zu zerlegen die man separat modellieren und entwickeln kann.
+
+### Single Responsibility Prinzip
+
+Das SRP besagt, dass Komponenten die sich aus demselben Grund ändern in derselben Komponente untergebracht werden sollten, und andersrum (unterschiedliche Komponenten, unterschiedliche Gründe).
+So ist die Wahrscheinlichkeit hoch, dass Änderungen tatsächlich nur in einer Komponente durchgeführt werden müssen.
+
+Beispiel:
+Eine Employee-Klasse mit vier Methoden, sollte sie zerlegt werden?
+
+Klasse Employee:
+int berechneGehalt()
+void speichern()
+Employee laden(long id)
+String label()
+
+Mit dem SRP. Was kann auf einen zukommen um Änderungen anzufordern.
+- Jemand aus der Lohnbuchhaltung könnte auf uns zukommen und Änderungen an der Gehaltsberechnung vorzunehmen, zum Beispiel, weil sich ein Bonusmodell oder ein Steuersatz geändert hat.
+- Aus dem Betrieb könnte die Datenbankadministration anfordern, dass wir die speichern- und laden-Methoden ändern, weil in der Datenbank ein Feld umbenannt werden musste.
+- Aus der Personalabteilung kommt die Bitte, die label-Funktion anzupassen, da diese in den Personalreports benutzt wird und in Zukunft dort auch die Steuerklasse angezeigt werden soll.
+
+Man sieht also, dass die Klasse mehr als eine Verantwortung hat. Zerlegung:
+Klasse Employee
+int berechneGehalt()
+
+Klasse EmployeeFormatter
+static String format(Employee e)
+
+Klasse EmployeeRepository
+void speichern(Employee e)
+Employee laden(long id)
+
+Diese neue Zerlegung sorgt dafür, dass Änerdungen in unterschiedlichen Bauteilen erfolgen würden und die anderen Klassen nicht betroffen werden.
+
+### Information Hiding Prinzip
+Das IHP besagt, dass man Komponenten so schneiden soll, dass sie die Entscheidung, die wir treffen, kapseln und nach außen hin verstecken.
+Diese Kapselung ermöglicht es, die Entscheidung über die Umsetzung später zu ändern.
+Man hat also eine öffentliche Schnittstelle zur Interaktion mit Komponenten und die restlichen Details der Umsetzung sind nach außen hin versteckt.
+
+
+## Bausteine bilden
